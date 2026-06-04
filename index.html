@@ -1,0 +1,1246 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>escolasimples — gestão para escolas de idiomas</title>
+  <meta name="description" content="O sistema que organiza alunos, mensalidades, agenda e folha de pagamento da sua escola de idiomas. Sem planilha, sem drama." />
+  <style>
+    /* ============================================================
+       Design system tokens — vinculados ao DESIGN.md do projeto
+       ============================================================ */
+    :root {
+      --bg: oklch(98.6% 0.004 246);
+      --surface: oklch(100% 0 0);
+      --surface-subtle: oklch(96.7% 0.007 246);
+      --surface-inset: oklch(94.2% 0.01 246);
+      --fg: oklch(20.5% 0.02 246);
+      --muted: oklch(47.5% 0.015 246);
+      --border: oklch(88.8% 0.01 246);
+      --accent: oklch(55% 0.18 258);
+      --accent-strong: oklch(47% 0.19 258);
+      --accent-2: oklch(57% 0.12 154);
+      --success: oklch(58% 0.14 146);
+      --warning: oklch(76% 0.15 74);
+      --danger: oklch(61% 0.18 25);
+      --info: oklch(60% 0.1 236);
+
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --radius-1: 10px;
+      --radius-2: 16px;
+      --radius-3: 24px;
+      --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.04);
+      --shadow-2: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --line: 1px solid var(--border);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body { min-height: 100vh; }
+
+    img, svg { display: block; max-width: 100%; }
+
+    /* ---- Tipografia ---- */
+    .t-display {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+    .t-display-xl  { font-size: clamp(2.4rem, 5vw, 4.5rem); }
+    .t-display-lg  { font-size: clamp(1.7rem, 3.5vw, 3rem); }
+    .t-display-md  { font-size: clamp(1.3rem, 2vw, 1.85rem); }
+
+    .t-kicker {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .t-body {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .t-meta {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ---- Layout ---- */
+    .wrap {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    /* ---- Nav ---- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: oklch(98.6% 0.004 246 / 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--border); }
+    .nav-inner {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-logo svg { height: 34px; width: auto; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      background: var(--fg);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent-strong); transform: translateY(-1px); }
+
+    /* ---- Hero ---- */
+    .hero {
+      padding: 4rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -12%;
+      width: 60%;
+      height: 120%;
+      background: radial-gradient(circle at 65% 35%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-text { max-width: 560px; }
+    .hero-text h1 { margin-bottom: 1.2rem; }
+    .hero-text .t-body {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.16s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.16s cubic-bezier(0.23, 1, 0.32, 1), background 0.16s;
+      font-family: var(--font-body);
+    }
+    .btn-primary {
+      background: var(--fg);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-1);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--fg);
+      border: var(--line);
+    }
+    .btn-ghost:hover {
+      background: var(--surface-subtle);
+      transform: translateY(-1px);
+    }
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-visual svg {
+      width: 100%;
+      max-width: 380px;
+      height: auto;
+      filter: drop-shadow(0 24px 48px rgba(15, 23, 42, 0.10));
+    }
+
+    /* ---- Pain (Dor) ---- */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .pain-card {
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-1);
+      transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .pain-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+    }
+    .pain-card .pain-label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      background: color-mix(in oklab, var(--accent) 10%, var(--surface));
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+    }
+    .pain-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      color: var(--fg);
+    }
+    .pain-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    /* ---- Solution ---- */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    .solution-text { max-width: 520px; }
+    .solution-text .t-body {
+      font-size: 1.08rem;
+      margin-bottom: 1.2rem;
+    }
+    .solution-visual {
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      box-shadow: var(--shadow-2);
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+    .mini-dash {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .mini-dash-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+    .mini-stat {
+      background: var(--surface-subtle);
+      border-radius: var(--radius-1);
+      padding: 0.65rem 0.75rem;
+    }
+    .mini-stat .val {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.1;
+    }
+    .mini-stat .lbl {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .mini-table th {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-align: left;
+      padding: 0.4rem 0.5rem;
+      border-bottom: var(--line);
+    }
+    .mini-table td {
+      font-size: 0.78rem;
+      padding: 0.45rem 0.5rem;
+      border-bottom: var(--line);
+    }
+    .mini-pill {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .mini-pill.ok { background: color-mix(in oklab, var(--success) 16%, var(--surface)); color: var(--success); }
+    .mini-pill.warn { background: color-mix(in oklab, var(--warning) 18%, var(--surface)); color: var(--warning); }
+
+    /* ---- Animated demo (efeito GIF de navegação) ---- */
+    .demo-section { background: var(--surface); border-top: var(--line); border-bottom: var(--line); }
+    .demo-browser {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--fg);
+      border-radius: var(--radius-2);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+    }
+    .demo-chrome {
+      background: #1c1b1a;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .demo-dot { width: 9px; height: 9px; border-radius: 50%; background: #3a3a3a; }
+    .demo-dot:first-child { background: #e85d54; }
+    .demo-dot:nth-child(2) { background: #e8a850; }
+    .demo-dot:nth-child(3) { background: #5dbe5d; }
+    .demo-url {
+      flex: 1;
+      background: #292724;
+      border-radius: 6px;
+      padding: 0.2rem 0.75rem;
+      font-size: 0.7rem;
+      font-family: var(--font-mono);
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .demo-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+      overflow: hidden;
+    }
+    .demo-screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: stretch;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .demo-screen.active { opacity: 1; pointer-events: auto; }
+    .demo-sidebar {
+      width: 140px;
+      background: #1c1b1a;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+    .demo-nav-item {
+      padding: 0.4rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+      font-family: var(--font-body);
+    }
+    .demo-nav-item.sel { background: rgba(255,255,255,0.1); color: #fff; }
+    .demo-content {
+      flex: 1;
+      padding: 1rem 1.2rem;
+      overflow: hidden;
+    }
+    .demo-content h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      color: var(--fg);
+    }
+    .demo-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .demo-kpi {
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-1);
+      padding: 0.55rem 0.65rem;
+    }
+    .demo-kpi .dk-num {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--fg);
+      line-height: 1.1;
+    }
+    .demo-kpi .dk-lbl {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.72rem;
+    }
+    .demo-table th {
+      text-align: left;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0.35rem 0.5rem;
+      border-bottom: var(--line);
+    }
+    .demo-table td {
+      padding: 0.4rem 0.5rem;
+      border-bottom: var(--line);
+    }
+    .demo-pill {
+      display: inline-block;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+    .demo-pill.g { background: color-mix(in oklab, var(--success) 18%, var(--surface)); color: var(--success); }
+    .demo-pill.w { background: color-mix(in oklab, var(--warning) 20%, var(--surface)); color: var(--warning); }
+    .demo-pill.r { background: color-mix(in oklab, var(--danger) 14%, var(--surface)); color: var(--danger); }
+
+    /* Calendário simplificado */
+    .demo-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 2px;
+    }
+    .demo-cal-hdr {
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-align: center;
+      padding: 0.3rem 0;
+    }
+    .demo-cal-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-1);
+      background: var(--surface);
+      border: var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+    }
+    .demo-cal-cell.has-aula { background: color-mix(in oklab, var(--accent) 10%, var(--surface)); border-color: color-mix(in oklab, var(--accent) 25%, var(--border)); }
+    .demo-cal-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin-top: 2px; }
+
+    /* Barras de previsibilidade */
+    .demo-bar-group { display: grid; gap: 0.5rem; }
+    .demo-bar-row { display: grid; grid-template-columns: 100px 1fr 60px; gap: 0.5rem; align-items: center; }
+    .demo-bar-row .b-lbl { font-size: 0.7rem; color: var(--fg); font-weight: 500; }
+    .demo-bar-row .b-val { font-family: var(--font-mono); font-size: 0.72rem; text-align: right; font-weight: 600; }
+    .demo-bar-track { height: 8px; background: var(--surface-subtle); border-radius: 999px; overflow: hidden; }
+    .demo-bar-fill { height: 100%; border-radius: 999px; }
+    .demo-bar-fill.g { background: var(--success); }
+    .demo-bar-fill.bl { background: var(--accent); }
+    .demo-bar-fill.w { background: var(--warning); }
+
+    .demo-indicator {
+      display: flex;
+      gap: 0.3rem;
+      justify-content: center;
+      margin-top: 0.75rem;
+    }
+    .demo-indicator span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.4s;
+    }
+    .demo-indicator span.on { background: var(--accent); }
+
+    .demo-legend {
+      text-align: center;
+      margin-top: 0.6rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ---- Modules ---- */
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-header .t-kicker { margin-bottom: 0.5rem; }
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .module-card {
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-1);
+      transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .module-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-2);
+    }
+    .module-card .module-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-1);
+      background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .module-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: var(--fg);
+    }
+    .module-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* ---- Social proof ---- */
+    .social-strip {
+      background: var(--surface-subtle);
+      border-top: var(--line);
+      border-bottom: var(--line);
+    }
+    .testimonial {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .testimonial blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--fg);
+      margin-bottom: 1.2rem;
+    }
+    .testimonial cite {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--fg);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    .testimonial .cite-sub {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ---- Pricing ---- */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .price-card {
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      padding: 2rem 1.75rem;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .price-card.featured {
+      border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+      box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 10%, transparent), var(--shadow-2);
+      position: relative;
+    }
+    .price-card.featured::before {
+      content: 'Mais escolhido';
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+    .price-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin-bottom: 0.25rem;
+    }
+    .price-card .price-amount {
+      font-family: var(--font-mono);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--fg);
+      margin: 0.75rem 0 0.25rem;
+      letter-spacing: -0.03em;
+    }
+    .price-card .price-period {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 1.25rem;
+    }
+    .price-card ul {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .price-card li {
+      padding: 0.45rem 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-bottom: var(--line);
+    }
+    .price-card li:last-child { border-bottom: 0; }
+    .price-card li::before {
+      content: '✓ ';
+      color: var(--success);
+      font-weight: 700;
+    }
+    .price-card .btn { width: 100%; justify-content: center; }
+    .integration-note {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .integration-note strong { color: var(--fg); }
+
+    /* ---- Final CTA ---- */
+    .cta-final {
+      text-align: center;
+      padding: 5rem 0;
+    }
+    .cta-final .t-display-lg { margin-bottom: 1rem; }
+    .cta-final .t-body { max-width: 520px; margin: 0 auto 2rem; }
+
+    /* ---- Footer ---- */
+    .footer {
+      border-top: var(--line);
+      padding: 3rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.25rem 0;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: var(--line);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 900px) {
+      .section { padding: 3.5rem 0; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+      .hero-text { max-width: 100%; }
+      .hero-text .t-body { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-visual svg { max-width: 240px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .solution-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .solution-text { max-width: 100%; text-align: center; }
+      .module-grid { grid-template-columns: 1fr 1fr; }
+      .mini-dash-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .price-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .section-header { text-align: left; }
+      .demo-sidebar { width: 110px; }
+      .demo-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .demo-bar-row { grid-template-columns: 80px 1fr 50px; }
+    }
+
+    @media (max-width: 600px) {
+      .module-grid { grid-template-columns: 1fr; }
+      .mini-dash-row { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero { padding: 2rem 0 3rem; }
+      .demo-cal-grid { gap: 1px; }
+      .demo-cal-cell { font-size: 0.55rem; }
+      .demo-cal-hdr { font-size: 0.48rem; }
+    }
+
+    /* ---- Reduced motion ---- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="escolasimples — início">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="34" role="img" aria-label="escolasimples">
+          <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+          <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+          <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+        </svg>
+      </a>
+      <a href="#planos" class="nav-cta">Ver planos</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-text">
+        <h1 class="t-display t-display-xl">Sua escola não é uma planilha.</h1>
+        <p class="t-body">O escolasimples organiza alunos, mensalidades, agenda e folha de pagamento num lugar só — pra você voltar a fazer o que importa: ensinar.</p>
+        <div class="hero-actions">
+          <a href="#planos" class="btn btn-primary">Conhecer planos</a>
+          <a href="#demo" class="btn btn-ghost">Ver o sistema em ação</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <!-- Diário centrado no quadrado -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Diário de classe com claridade">
+          <rect x="18" y="24" width="204" height="192" rx="44" fill="#2d325a"/>
+          <defs>
+            <radialGradient id="hero-glow" cx="50%" cy="42%" r="50%">
+              <stop offset="0%" stop-color="#faf7f2" stop-opacity="0.16"/>
+              <stop offset="50%" stop-color="#faf7f2" stop-opacity="0.05"/>
+              <stop offset="100%" stop-color="#2d325a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect x="18" y="24" width="204" height="192" rx="44" fill="url(#hero-glow)"/>
+          <!-- Centro do quadrado = 18 + 204/2 = 120 -->
+          <path d="M44 195 Q44 206 54 208 L116 203 Q118 197 118 186 L118 86 Q118 74 108 72 Q82 70 62 74 Q52 76 52 86 Z" fill="#faf7f2" opacity="0.96"/>
+          <path d="M196 195 Q196 206 186 208 L124 203 Q122 197 122 186 L122 86 Q122 74 132 72 Q158 70 178 74 Q188 76 188 86 Z" fill="#faf7f2" opacity="0.96"/>
+          <line x1="120" y1="68" x2="120" y2="210" stroke="#1e2240" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="54" y1="104" x2="116" y2="102" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <line x1="54" y1="124" x2="116" y2="122" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <line x1="54" y1="144" x2="114" y2="142" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <line x1="186" y1="104" x2="124" y2="102" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <line x1="186" y1="124" x2="124" y2="122" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <line x1="186" y1="144" x2="126" y2="142" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+          <circle cx="120" cy="90" r="4" fill="#e8a850" opacity="0.9"/>
+          <circle cx="120" cy="90" r="9" fill="none" stroke="#e8a850" stroke-width="0.8" opacity="0.30"/>
+          <circle cx="120" cy="90" r="16" fill="none" stroke="#e8a850" stroke-width="0.5" opacity="0.12"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dor — \"Você já viveu isso\" -->
+  <section class="section">
+    <div class="wrap">
+      <p class="t-kicker">Você já viveu isso</p>
+      <h2 class="t-display t-display-lg" style="max-width:640px;">Três problemas que consomem a sua semana — e um sistema que resolve.</h2>
+      <div class="pain-grid">
+        <article class="pain-card">
+          <span class="pain-label">Pagamento</span>
+          <h3>Tudo é Pix e cartão, mas a baixa só sai no fim do dia.</h3>
+          <p>O aluno pagou. A notificação do banco chegou. Mas você está dando aula, depois tem reunião, e aquela mensalidade fica pendurada na sua cabeça — e na planilha — até a noite. Com o escolasimples, o recebível aparece na sua tela e a baixa está a um clique. <strong>Você reconcilia na hora, entre uma turma e outra.</strong></p>
+        </article>
+        <article class="pain-card">
+          <span class="pain-label">Agenda</span>
+          <h3>Cinco professores, trinta horários e um quebra-cabeça semanal.</h3>
+          <p>Qual professor está livre na quarta às 19h? A turma de conversação cabe na sala 2 ou vai conflitar com o VIP da Amanda? O aluno novo combina mais com o perfil da Carla ou do Roberto? O escolasimples mostra tudo isso numa tela só — <strong>você aloca professor, aluno e horário sem abrir três planilhas.</strong></p>
+        </article>
+        <article class="pain-card">
+          <span class="pain-label">Previsibilidade</span>
+          <h3>Você sabe quanto vai receber mês que vem?</h3>
+          <p>Quanto entrou de receita este mês? Quanto ainda falta? Quem está inadimplente e qual o impacto disso no seu fluxo de caixa dos próximos meses? O escolasimples entrega previsão de receita, inadimplência ativa e projeção de custos num painel que você lê em <strong>30 segundos</strong>. Sem fórmula de Excel, sem susto no fim do mês.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solução — \"Um lugar só\" -->
+  <section class="section" id="como-funciona" style="background: var(--surface); border-top: var(--line); border-bottom: var(--line);">
+    <div class="wrap">
+      <div class="solution-grid">
+        <div class="solution-text">
+          <p class="t-kicker">Um lugar só</p>
+          <h2 class="t-display t-display-lg" style="margin-bottom:1.2rem;">Sem drama. Sem planilha. Sem WhatsApp.</h2>
+          <p class="t-body">O escolasimples é o sistema que a dona de escola de idiomas sempre quis: simples de usar, completo no que importa. Você acessa pelo navegador, cadastra seus alunos, monta as turmas, lança as mensalidades e acompanha tudo de onde estiver — <strong>no computador da escola ou no celular, entre uma aula e outra.</strong></p>
+          <p class="t-body">Nada de dez planilhas que não se conversam. Nada de arquivo compartilhado no grupo da família. Nada de mensagem de WhatsApp perdida com "prof, confirma meu horário?". Cada informação no seu lugar, atualizada em tempo real — e você com a cabeça livre pra voltar pra sala de aula.</p>
+        </div>
+        <div class="solution-visual">
+          <div class="mini-dash">
+            <div class="mini-dash-row">
+              <div class="mini-stat">
+                <div class="val">147</div>
+                <div class="lbl">Alunos ativos</div>
+              </div>
+              <div class="mini-stat">
+                <div class="val">R$ 18,4k</div>
+                <div class="lbl">Mensalidades</div>
+              </div>
+              <div class="mini-stat">
+                <div class="val">12</div>
+                <div class="lbl">Turmas</div>
+              </div>
+              <div class="mini-stat">
+                <div class="val">8</div>
+                <div class="lbl">Professores</div>
+              </div>
+            </div>
+            <table class="mini-table">
+              <thead>
+                <tr><th>Aluno</th><th>Turma</th><th>Mensalidade</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ana Lima</td><td>Avançado</td><td style="font-family:var(--font-mono);font-size:0.78rem;">R$ 320</td><td><span class="mini-pill ok">em dia</span></td></tr>
+                <tr><td>Carlos Melo</td><td>Iniciante</td><td style="font-family:var(--font-mono);font-size:0.78rem;">R$ 280</td><td><span class="mini-pill ok">em dia</span></td></tr>
+                <tr><td>Marina Sá</td><td>Conversação</td><td style="font-family:var(--font-mono);font-size:0.78rem;">R$ 350</td><td><span class="mini-pill warn">vence hoje</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo animada (efeito GIF de navegação) -->
+  <section class="demo-section section" id="demo">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="t-kicker">Veja o sistema</p>
+        <h2 class="t-display t-display-lg">O escolasimples em movimento.</h2>
+      </div>
+      <div class="demo-browser">
+        <div class="demo-chrome">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-url">app.escolasimples.com</span>
+        </div>
+        <div class="demo-stage" id="demo-stage">
+          <!-- Tela 1: Dashboard / KPIs -->
+          <div class="demo-screen active" data-screen="0">
+            <div class="demo-sidebar">
+              <div class="demo-nav-item sel">Início</div>
+              <div class="demo-nav-item">Alunos</div>
+              <div class="demo-nav-item">Agenda</div>
+              <div class="demo-nav-item">Financeiro</div>
+              <div class="demo-nav-item">Folha</div>
+            </div>
+            <div class="demo-content">
+              <h4>Bom dia, Denise</h4>
+              <div class="demo-kpis">
+                <div class="demo-kpi"><div class="dk-num">147</div><div class="dk-lbl">Alunos ativos</div></div>
+                <div class="demo-kpi"><div class="dk-num">R$ 18,4k</div><div class="dk-lbl">Receita do mês</div></div>
+                <div class="demo-kpi"><div class="dk-num">3</div><div class="dk-lbl">Inadimplentes</div></div>
+                <div class="demo-kpi"><div class="dk-num">8</div><div class="dk-lbl">Aulas hoje</div></div>
+              </div>
+              <table class="demo-table">
+                <thead><tr><th>Aluno</th><th>Turma</th><th>Mens.</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Ana Lima</td><td>Avançado</td><td>R$ 320</td><td><span class="demo-pill g">em dia</span></td></tr>
+                  <tr><td>Carlos Melo</td><td>Iniciante</td><td>R$ 280</td><td><span class="demo-pill g">em dia</span></td></tr>
+                  <tr><td>Marina Sá</td><td>Conversação</td><td>R$ 350</td><td><span class="demo-pill w">vence hoje</span></td></tr>
+                  <tr><td>Pedro Alves</td><td>VIP</td><td>R$ 450</td><td><span class="demo-pill r">atrasado</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tela 2: Alunos -->
+          <div class="demo-screen" data-screen="1">
+            <div class="demo-sidebar">
+              <div class="demo-nav-item">Início</div>
+              <div class="demo-nav-item sel">Alunos</div>
+              <div class="demo-nav-item">Agenda</div>
+              <div class="demo-nav-item">Financeiro</div>
+              <div class="demo-nav-item">Folha</div>
+            </div>
+            <div class="demo-content">
+              <h4>Alunos</h4>
+              <table class="demo-table">
+                <thead><tr><th>Nome</th><th>Turma</th><th>Entrada</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>Ana Lima</td><td>Avançado</td><td>Mar/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
+                  <tr><td>Carlos Melo</td><td>Iniciante</td><td>Jan/2026</td><td><span class="demo-pill g">ativo</span></td></tr>
+                  <tr><td>Marina Sá</td><td>Conversação</td><td>Nov/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
+                  <tr><td>Pedro Alves</td><td>VIP</td><td>Ago/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
+                  <tr><td>Júlia Rocha</td><td>Iniciante</td><td>Abr/2026</td><td><span class="demo-pill w">trancado</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Tela 3: Agenda -->
+          <div class="demo-screen" data-screen="2">
+            <div class="demo-sidebar">
+              <div class="demo-nav-item">Início</div>
+              <div class="demo-nav-item">Alunos</div>
+              <div class="demo-nav-item sel">Agenda</div>
+              <div class="demo-nav-item">Financeiro</div>
+              <div class="demo-nav-item">Folha</div>
+            </div>
+            <div class="demo-content">
+              <h4>Agenda da semana</h4>
+              <div class="demo-cal-grid">
+                <div class="demo-cal-hdr">Seg</div><div class="demo-cal-hdr">Ter</div><div class="demo-cal-hdr">Qua</div><div class="demo-cal-hdr">Qui</div><div class="demo-cal-hdr">Sex</div><div class="demo-cal-hdr">Sáb</div><div class="demo-cal-hdr">Dom</div>
+                <div class="demo-cal-cell">2</div><div class="demo-cal-cell has-aula">3<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">4<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">5<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">6</div><div class="demo-cal-cell">7</div><div class="demo-cal-cell">8</div>
+                <div class="demo-cal-cell has-aula">9<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">10<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">11<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">12</div><div class="demo-cal-cell has-aula">13<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">14</div><div class="demo-cal-cell">15</div>
+              </div>
+              <div class="demo-legend">● dia com aula &nbsp;—&nbsp; turmas alocadas por professor e horário</div>
+            </div>
+          </div>
+
+          <!-- Tela 4: Financeiro / Previsibilidade -->
+          <div class="demo-screen" data-screen="3">
+            <div class="demo-sidebar">
+              <div class="demo-nav-item">Início</div>
+              <div class="demo-nav-item">Alunos</div>
+              <div class="demo-nav-item">Agenda</div>
+              <div class="demo-nav-item sel">Financeiro</div>
+              <div class="demo-nav-item">Folha</div>
+            </div>
+            <div class="demo-content">
+              <h4>Previsão de receita</h4>
+              <div class="demo-bar-group">
+                <div class="demo-bar-row">
+                  <span class="b-lbl">Executado</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill g" style="width:78%"></div></div>
+                  <span class="b-val" style="color:var(--success);">R$ 14,3k</span>
+                </div>
+                <div class="demo-bar-row">
+                  <span class="b-lbl">A receber</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill bl" style="width:18%"></div></div>
+                  <span class="b-val" style="color:var(--accent);">R$ 3,4k</span>
+                </div>
+                <div class="demo-bar-row">
+                  <span class="b-lbl">Inadimplente</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill w" style="width:4%"></div></div>
+                  <span class="b-val" style="color:var(--warning);">R$ 730</span>
+                </div>
+              </div>
+              <div class="demo-legend" style="margin-top:1rem;">Previsão mês seguinte: <strong style="color:var(--fg);">R$ 18,8k</strong> &nbsp;·&nbsp; Custo folha: <strong style="color:var(--fg);">R$ 8,2k</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo-indicator" id="demo-dots">
+          <span class="on"></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Módulos -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="t-kicker">O que você controla</p>
+        <h2 class="t-display t-display-lg">Toda a escola em seis módulos. Simples assim.</h2>
+      </div>
+      <div class="module-grid">
+        <article class="module-card">
+          <div class="module-icon">👥</div>
+          <h3>Alunos e turmas</h3>
+          <p>Cadastro completo, pacotes de aulas, histórico de cada aluno. Cada turma com sua agenda, cada aluno no seu lugar. Chega de procurar telefone no WhatsApp.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">💰</div>
+          <h3>Financeiro</h3>
+          <p>Mensalidades, contas a receber, fluxo de caixa. Você sabe exatamente quanto entrou, quanto vai entrar e quem está devendo — sem abrir planilha. Baixa de pagamento em um clique.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">📅</div>
+          <h3>Agenda e aulas</h3>
+          <p>Calendário semanal, aulas VIP e em grupo, substituições e reposições. Aloque professor, aluno e horário numa tela só. Ninguém se perde — nem você, nem o professor, nem o aluno.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">👩‍🏫</div>
+          <h3>Professores</h3>
+          <p>Cadastro de cada professor, disponibilidade de horários, turmas atribuídas, valor por hora-aula. Você sabe exatamente quem está disponível e quanto cada um vai receber no fim do mês.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">📊</div>
+          <h3>Folha de pagamento</h3>
+          <p>Quanto cada professor recebeu no mês, quantas aulas deu, qual o valor por hora. Fechou o mês, a folha já está pronta. Sem calculadora, sem surpresa.</p>
+        </article>
+        <article class="module-card">
+          <div class="module-icon">🔮</div>
+          <h3>Previsibilidade</h3>
+          <p>Receita prevista, executado vs. esperado, inadimplência ativa, projeção dos próximos meses. Você toma decisão com número real, não com sensação. Tudo que o contador pergunta, você já sabe.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prova social -->
+  <section class="social-strip section">
+    <div class="wrap">
+      <div class="testimonial">
+        <blockquote>"Eu passei anos controlando minha escola pelo caderno e pelo WhatsApp. Quando testei o escolasimples, percebi que estava gastando umas 6 horas por semana só fechando planilha. Agora abro o navegador, vejo o que entrou, o que venceu, quem deu aula — e volto a dar aula."</blockquote>
+        <cite>Fernanda C.</cite>
+        <p class="cite-sub">dona de escola de idiomas, São Paulo</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section class="section" id="planos">
+    <div class="wrap">
+      <div class="section-header">
+        <p class="t-kicker">Planos</p>
+        <h2 class="t-display t-display-lg">Simples como o resto. Sem letra miúda.</h2>
+      </div>
+      <div class="price-grid">
+        <div class="price-card">
+          <h3>Essencial</h3>
+          <p class="t-meta" style="text-align:center;">Pra quem está começando</p>
+          <div class="price-amount">R$ 97<span style="font-size:1rem;font-weight:500;">/mês</span></div>
+          <p class="price-period">até 50 alunos</p>
+          <ul>
+            <li>Cadastro de alunos e turmas</li>
+            <li>Agenda semanal de aulas</li>
+            <li>Controle de mensalidades</li>
+            <li>Suporte por email</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Começar agora</a>
+        </div>
+        <div class="price-card featured">
+          <h3>Completo</h3>
+          <p class="t-meta" style="text-align:center;">O mais escolhido</p>
+          <div class="price-amount">R$ 197<span style="font-size:1rem;font-weight:500;">/mês</span></div>
+          <p class="price-period">até 200 alunos</p>
+          <ul>
+            <li>Tudo do Essencial</li>
+            <li>Folha de pagamento de professores</li>
+            <li>Notificações automáticas (WhatsApp e email)</li>
+            <li>Relatórios financeiros</li>
+            <li>Suporte prioritário</li>
+          </ul>
+          <a href="#" class="btn btn-primary">Começar agora</a>
+        </div>
+        <div class="price-card">
+          <h3>Escola</h3>
+          <p class="t-meta" style="text-align:center;">Pra escolas maiores</p>
+          <div class="price-amount">R$ 297<span style="font-size:1rem;font-weight:500;">/mês</span></div>
+          <p class="price-period">alunos ilimitados</p>
+          <ul>
+            <li>Tudo do Completo</li>
+            <li>Múltiplos professores admin</li>
+            <li>Portal do professor</li>
+            <li>Exportação contábil</li>
+            <li>Suporte por telefone</li>
+          </ul>
+          <a href="#" class="btn btn-ghost">Começar agora</a>
+        </div>
+      </div>
+      <div class="integration-note">
+        <strong>Pronto para integrar</strong> com seu meio de pagamento — Pix, cartão de crédito, boleto. O sistema já está preparado para conversar com o seu gateway assim que você escolher um. Enquanto isso, o controle de mensalidades funciona direto no escolasimples, com baixa manual rápida.
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="28" style="margin-bottom:0.75rem;" role="img" aria-label="escolasimples">
+            <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+            <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+            <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+          </svg>
+          <p style="font-size:0.85rem;max-width:260px;">Gestão simples para escolas de idiomas. Feito por quem já viveu o drama da planilha.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <a href="#planos">Planos</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#demo">Ver o sistema</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
+          <a href="#">Privacidade</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="mailto:oi@escolasimples.com">oi@escolasimples.com</a>
+          <a href="#">WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 escolasimples</span>
+        <span style="color:var(--muted);">Feito em São Paulo</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Demo animada — alterna entre as 4 telas automaticamente
+    (function() {
+      const screens = document.querySelectorAll('.demo-screen');
+      const dots = document.querySelectorAll('#demo-dots span');
+      let cur = 0;
+      const total = screens.length;
+
+      function show(i) {
+        screens.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('on'));
+        screens[i].classList.add('active');
+        dots[i].classList.add('on');
+      }
+
+      function next() {
+        cur = (cur + 1) % total;
+        show(cur);
+      }
+
+      // Alterna a cada 4 segundos
+      let timer = setInterval(next, 4000);
+
+      // Pausa se o mouse estiver sobre o demo
+      const stage = document.getElementById('demo-stage');
+      if (stage) {
+        stage.addEventListener('mouseenter', () => { clearInterval(timer); });
+        stage.addEventListener('mouseleave', () => { timer = setInterval(next, 4000); });
+      }
+
+      // Click nos dots
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          clearInterval(timer);
+          cur = i;
+          show(cur);
+          timer = setInterval(next, 4000);
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

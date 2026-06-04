@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-labelledby="title desc">
+  <title id="title">escolasimples lockup</title>
+  <desc id="desc">Lockup horizontal: diário de classe com claridade + wordmark para a marca escolasimples.</desc>
+
+  <!-- Símbolo: diário de classe em warm indigo -->
+  <rect x="28" y="34" width="172" height="172" rx="40" fill="#2d325a"/>
+
+  <!-- Claridade suave irradiando do centro -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#faf7f2" stop-opacity="0.16"/>
+      <stop offset="50%" stop-color="#faf7f2" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#2d325a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="28" y="34" width="172" height="172" rx="40" fill="url(#glow)"/>
+
+  <!-- Página esquerda — centrada em relação ao quadrado (centro do quadrado = x=114) -->
+  <path d="M50 186 Q50 196 60 198 L106 194 Q108 188 108 178 L108 88 Q108 76 98 74 Q78 72 60 76 Q50 78 50 88 Z"
+        fill="#faf7f2" opacity="0.96"/>
+
+  <!-- Página direita -->
+  <path d="M178 186 Q178 196 168 198 L122 194 Q120 188 120 178 L120 88 Q120 76 130 74 Q150 72 168 76 Q178 78 178 88 Z"
+        fill="#faf7f2" opacity="0.96"/>
+
+  <!-- Lombada — no centro do quadrado -->
+  <line x1="114" y1="70" x2="114" y2="200" stroke="#1e2240" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Linhas pautadas (esquerda) -->
+  <line x1="58" y1="100" x2="106" y2="98" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="58" y1="118" x2="106" y2="116" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="58" y1="136" x2="104" y2="134" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Linhas pautadas (direita) -->
+  <line x1="170" y1="100" x2="122" y2="98" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="170" y1="118" x2="122" y2="116" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="170" y1="136" x2="124" y2="134" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Luz sobre a lombada — o momento de clareza -->
+  <circle cx="114" cy="88" r="3.5" fill="#e8a850" opacity="0.9"/>
+  <circle cx="114" cy="88" r="7.5" fill="none" stroke="#e8a850" stroke-width="0.8" opacity="0.30"/>
+  <circle cx="114" cy="88" r="13" fill="none" stroke="#e8a850" stroke-width="0.5" opacity="0.12"/>
+
+  <!-- Wordmark -->
+  <text x="236" y="108" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="58" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+
+  <!-- Tagline -->
+  <text x="238" y="148" fill="#6b6560" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="18" font-weight="500" letter-spacing="0.04em">gestão para escolas de idiomas</text>
+</svg>

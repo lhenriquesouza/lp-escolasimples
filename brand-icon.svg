@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">escolasimples ícone</title>
+  <desc id="desc">Diário de classe com claridade irradiando do centro — a gestão que tira a escola da escuridão das planilhas.</desc>
+
+  <!-- Container: warm indigo -->
+  <rect width="256" height="256" rx="48" fill="#2d325a"/>
+
+  <!-- Claridade suave irradiando do centro -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#faf7f2" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#faf7f2" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#2d325a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" rx="48" fill="url(#glow)"/>
+
+  <!-- Página esquerda -->
+  <path d="M56 184 Q56 196 68 198 L122 194 Q124 186 124 174 L124 68 Q124 54 112 52 Q88 50 70 54 Q56 58 56 72 Z"
+        fill="#faf7f2" opacity="0.96"/>
+
+  <!-- Página direita -->
+  <path d="M200 184 Q200 196 188 198 L134 194 Q132 186 132 174 L132 68 Q132 54 144 52 Q168 50 186 54 Q200 58 200 72 Z"
+        fill="#faf7f2" opacity="0.96"/>
+
+  <!-- Lombada central -->
+  <line x1="128" y1="48" x2="128" y2="198" stroke="#1e2240" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Linhas pautadas (página esquerda) -->
+  <line x1="66" y1="84" x2="120" y2="82" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="66" y1="106" x2="120" y2="104" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="66" y1="128" x2="120" y2="126" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="66" y1="150" x2="118" y2="148" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Linhas pautadas (página direita) -->
+  <line x1="190" y1="84" x2="136" y2="82" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="190" y1="106" x2="136" y2="104" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="190" y1="128" x2="136" y2="126" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+  <line x1="190" y1="150" x2="138" y2="148" stroke="#e0dbd2" stroke-width="1" stroke-linecap="round"/>
+
+  <!-- Pequena estrela/luz sobre a lombada — o momento de clareza -->
+  <circle cx="128" cy="74" r="3.5" fill="#e8a850" opacity="0.9"/>
+  <circle cx="128" cy="74" r="8" fill="none" stroke="#e8a850" stroke-width="0.8" opacity="0.35"/>
+  <circle cx="128" cy="74" r="14" fill="none" stroke="#e8a850" stroke-width="0.5" opacity="0.15"/>
+</svg>
