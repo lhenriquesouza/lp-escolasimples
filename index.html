@@ -341,10 +341,10 @@
     .mini-pill.ok { background: color-mix(in oklab, var(--success) 16%, var(--surface)); color: var(--success); }
     .mini-pill.warn { background: color-mix(in oklab, var(--warning) 18%, var(--surface)); color: var(--warning); }
 
-    /* ---- Animated demo (efeito GIF de navegação) ---- */
+    /* ---- Demo (GIF de navegação) ---- */
     .demo-section { background: var(--surface); border-top: var(--line); border-bottom: var(--line); }
     .demo-browser {
-      max-width: 820px;
+      max-width: 880px;
       margin: 0 auto;
       background: var(--fg);
       border-radius: var(--radius-2);
@@ -376,169 +376,13 @@
       text-overflow: ellipsis;
     }
     .demo-stage {
-      position: relative;
       width: 100%;
-      aspect-ratio: 16 / 10;
       background: var(--bg);
-      overflow: hidden;
+      line-height: 0;
     }
-    .demo-screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: stretch;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .demo-screen.active { opacity: 1; pointer-events: auto; }
-    .demo-sidebar {
-      width: 140px;
-      background: #1c1b1a;
-      padding: 1rem 0.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      flex-shrink: 0;
-    }
-    .demo-nav-item {
-      padding: 0.4rem 0.6rem;
-      border-radius: 8px;
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.5);
-      font-family: var(--font-body);
-    }
-    .demo-nav-item.sel { background: rgba(255,255,255,0.1); color: #fff; }
-    .demo-content {
-      flex: 1;
-      padding: 1rem 1.2rem;
-      overflow: hidden;
-    }
-    .demo-content h4 {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      margin-bottom: 0.75rem;
-      color: var(--fg);
-    }
-    .demo-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
-    }
-    .demo-kpi {
-      background: var(--surface);
-      border: var(--line);
-      border-radius: var(--radius-1);
-      padding: 0.55rem 0.65rem;
-    }
-    .demo-kpi .dk-num {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--fg);
-      line-height: 1.1;
-    }
-    .demo-kpi .dk-lbl {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-top: 0.15rem;
-    }
-    .demo-table {
+    .demo-gif {
       width: 100%;
-      border-collapse: collapse;
-      font-size: 0.72rem;
-    }
-    .demo-table th {
-      text-align: left;
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      padding: 0.35rem 0.5rem;
-      border-bottom: var(--line);
-    }
-    .demo-table td {
-      padding: 0.4rem 0.5rem;
-      border-bottom: var(--line);
-    }
-    .demo-pill {
-      display: inline-block;
-      padding: 0.12rem 0.45rem;
-      border-radius: 999px;
-      font-size: 0.6rem;
-      font-weight: 600;
-    }
-    .demo-pill.g { background: color-mix(in oklab, var(--success) 18%, var(--surface)); color: var(--success); }
-    .demo-pill.w { background: color-mix(in oklab, var(--warning) 20%, var(--surface)); color: var(--warning); }
-    .demo-pill.r { background: color-mix(in oklab, var(--danger) 14%, var(--surface)); color: var(--danger); }
-
-    /* Calendário simplificado */
-    .demo-cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, minmax(0, 1fr));
-      gap: 2px;
-    }
-    .demo-cal-hdr {
-      font-family: var(--font-mono);
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      text-align: center;
-      padding: 0.3rem 0;
-    }
-    .demo-cal-cell {
-      aspect-ratio: 1;
-      border-radius: var(--radius-1);
-      background: var(--surface);
-      border: var(--line);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.65rem;
-      font-family: var(--font-mono);
-    }
-    .demo-cal-cell.has-aula { background: color-mix(in oklab, var(--accent) 10%, var(--surface)); border-color: color-mix(in oklab, var(--accent) 25%, var(--border)); }
-    .demo-cal-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); margin-top: 2px; }
-
-    /* Barras de previsibilidade */
-    .demo-bar-group { display: grid; gap: 0.5rem; }
-    .demo-bar-row { display: grid; grid-template-columns: 100px 1fr 60px; gap: 0.5rem; align-items: center; }
-    .demo-bar-row .b-lbl { font-size: 0.7rem; color: var(--fg); font-weight: 500; }
-    .demo-bar-row .b-val { font-family: var(--font-mono); font-size: 0.72rem; text-align: right; font-weight: 600; }
-    .demo-bar-track { height: 8px; background: var(--surface-subtle); border-radius: 999px; overflow: hidden; }
-    .demo-bar-fill { height: 100%; border-radius: 999px; }
-    .demo-bar-fill.g { background: var(--success); }
-    .demo-bar-fill.bl { background: var(--accent); }
-    .demo-bar-fill.w { background: var(--warning); }
-
-    .demo-indicator {
-      display: flex;
-      gap: 0.3rem;
-      justify-content: center;
-      margin-top: 0.75rem;
-    }
-    .demo-indicator span {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: background 0.4s;
-    }
-    .demo-indicator span.on { background: var(--accent); }
-
-    .demo-legend {
-      text-align: center;
-      margin-top: 0.6rem;
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
+      display: block;
     }
 
     /* ---- Modules ---- */
@@ -589,35 +433,100 @@
       line-height: 1.5;
     }
 
-    /* ---- Social proof ---- */
+    /* ---- Social proof / Depoimentos ---- */
     .social-strip {
       background: var(--surface-subtle);
       border-top: var(--line);
       border-bottom: var(--line);
     }
-    .testimonial {
-      max-width: 680px;
+    .testimonial-carousel {
+      position: relative;
+      max-width: 720px;
       margin: 0 auto;
+      overflow: hidden;
+    }
+    .testimonial-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .testimonial-slide {
+      flex: 0 0 100%;
       text-align: center;
+      padding: 1rem 0.5rem 2.5rem;
     }
-    .testimonial blockquote {
+    .testimonial-slide blockquote {
       font-family: var(--font-display);
-      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
       font-style: italic;
-      line-height: 1.5;
+      line-height: 1.55;
       color: var(--fg);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.25rem;
+      max-width: 620px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .testimonial cite {
+    .testimonial-slide cite {
       font-style: normal;
-      font-weight: 600;
+      font-weight: 650;
       color: var(--fg);
       display: block;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.1rem;
     }
-    .testimonial .cite-sub {
-      font-size: 0.88rem;
+    .testimonial-slide .cite-school {
+      font-size: 0.9rem;
       color: var(--muted);
+      margin-bottom: 0.1rem;
+    }
+    .testimonial-slide .cite-city {
+      font-size: 0.82rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+    .testimonial-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .testimonial-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      padding: 0;
+    }
+    .testimonial-dot.active {
+      background: var(--accent);
+      transform: scale(1.35);
+    }
+    .testimonial-arrows {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .testimonial-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: var(--line);
+      background: var(--surface);
+      color: var(--fg);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .testimonial-arrow:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* ---- Pricing ---- */
@@ -672,7 +581,23 @@
     .price-card .price-period {
       color: var(--muted);
       font-size: 0.88rem;
+      margin-bottom: 0.5rem;
+    }
+    .price-card .price-per-student {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-2);
+      margin-bottom: 0.3rem;
+    }
+    .price-card .price-per-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.4;
       margin-bottom: 1.25rem;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .price-card ul {
       list-style: none;
@@ -693,17 +618,66 @@
       font-weight: 700;
     }
     .price-card .btn { width: 100%; justify-content: center; }
-    .integration-note {
-      text-align: center;
-      margin-top: 2rem;
-      padding: 1rem 1.5rem;
+
+    /* ---- Shared features (todos os planos incluem) ---- */
+    .price-features {
+      margin-top: 2.5rem;
+      padding: 2rem;
       background: var(--surface);
       border: var(--line);
       border-radius: var(--radius-2);
-      font-size: 0.92rem;
-      color: var(--muted);
     }
-    .integration-note strong { color: var(--fg); }
+    .price-features h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--fg);
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+    .price-features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 2rem;
+    }
+    .price-feature-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--surface-subtle);
+      font-size: 0.9rem;
+    }
+    .price-feature-item strong {
+      display: block;
+      color: var(--fg);
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+    .price-feature-item span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    /* ---- Enterprise note ---- */
+    .price-enterprise {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+    }
+    .price-enterprise p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+    .price-enterprise strong { color: var(--fg); }
+    .price-enterprise a {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .price-enterprise a:hover { text-decoration: underline; }
 
     /* ---- Final CTA ---- */
     .cta-final {
@@ -936,114 +910,8 @@
           <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
           <span class="demo-url">app.escolasimples.com</span>
         </div>
-        <div class="demo-stage" id="demo-stage">
-          <!-- Tela 1: Dashboard / KPIs -->
-          <div class="demo-screen active" data-screen="0">
-            <div class="demo-sidebar">
-              <div class="demo-nav-item sel">Início</div>
-              <div class="demo-nav-item">Alunos</div>
-              <div class="demo-nav-item">Agenda</div>
-              <div class="demo-nav-item">Financeiro</div>
-              <div class="demo-nav-item">Folha</div>
-            </div>
-            <div class="demo-content">
-              <h4>Bom dia, Denise</h4>
-              <div class="demo-kpis">
-                <div class="demo-kpi"><div class="dk-num">147</div><div class="dk-lbl">Alunos ativos</div></div>
-                <div class="demo-kpi"><div class="dk-num">R$ 18,4k</div><div class="dk-lbl">Receita do mês</div></div>
-                <div class="demo-kpi"><div class="dk-num">3</div><div class="dk-lbl">Inadimplentes</div></div>
-                <div class="demo-kpi"><div class="dk-num">8</div><div class="dk-lbl">Aulas hoje</div></div>
-              </div>
-              <table class="demo-table">
-                <thead><tr><th>Aluno</th><th>Turma</th><th>Mens.</th><th>Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Ana Lima</td><td>Avançado</td><td>R$ 320</td><td><span class="demo-pill g">em dia</span></td></tr>
-                  <tr><td>Carlos Melo</td><td>Iniciante</td><td>R$ 280</td><td><span class="demo-pill g">em dia</span></td></tr>
-                  <tr><td>Marina Sá</td><td>Conversação</td><td>R$ 350</td><td><span class="demo-pill w">vence hoje</span></td></tr>
-                  <tr><td>Pedro Alves</td><td>VIP</td><td>R$ 450</td><td><span class="demo-pill r">atrasado</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Tela 2: Alunos -->
-          <div class="demo-screen" data-screen="1">
-            <div class="demo-sidebar">
-              <div class="demo-nav-item">Início</div>
-              <div class="demo-nav-item sel">Alunos</div>
-              <div class="demo-nav-item">Agenda</div>
-              <div class="demo-nav-item">Financeiro</div>
-              <div class="demo-nav-item">Folha</div>
-            </div>
-            <div class="demo-content">
-              <h4>Alunos</h4>
-              <table class="demo-table">
-                <thead><tr><th>Nome</th><th>Turma</th><th>Entrada</th><th>Status</th></tr></thead>
-                <tbody>
-                  <tr><td>Ana Lima</td><td>Avançado</td><td>Mar/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
-                  <tr><td>Carlos Melo</td><td>Iniciante</td><td>Jan/2026</td><td><span class="demo-pill g">ativo</span></td></tr>
-                  <tr><td>Marina Sá</td><td>Conversação</td><td>Nov/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
-                  <tr><td>Pedro Alves</td><td>VIP</td><td>Ago/2025</td><td><span class="demo-pill g">ativo</span></td></tr>
-                  <tr><td>Júlia Rocha</td><td>Iniciante</td><td>Abr/2026</td><td><span class="demo-pill w">trancado</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Tela 3: Agenda -->
-          <div class="demo-screen" data-screen="2">
-            <div class="demo-sidebar">
-              <div class="demo-nav-item">Início</div>
-              <div class="demo-nav-item">Alunos</div>
-              <div class="demo-nav-item sel">Agenda</div>
-              <div class="demo-nav-item">Financeiro</div>
-              <div class="demo-nav-item">Folha</div>
-            </div>
-            <div class="demo-content">
-              <h4>Agenda da semana</h4>
-              <div class="demo-cal-grid">
-                <div class="demo-cal-hdr">Seg</div><div class="demo-cal-hdr">Ter</div><div class="demo-cal-hdr">Qua</div><div class="demo-cal-hdr">Qui</div><div class="demo-cal-hdr">Sex</div><div class="demo-cal-hdr">Sáb</div><div class="demo-cal-hdr">Dom</div>
-                <div class="demo-cal-cell">2</div><div class="demo-cal-cell has-aula">3<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">4<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">5<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">6</div><div class="demo-cal-cell">7</div><div class="demo-cal-cell">8</div>
-                <div class="demo-cal-cell has-aula">9<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">10<div class="demo-cal-dot"></div></div><div class="demo-cal-cell has-aula">11<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">12</div><div class="demo-cal-cell has-aula">13<div class="demo-cal-dot"></div></div><div class="demo-cal-cell">14</div><div class="demo-cal-cell">15</div>
-              </div>
-              <div class="demo-legend">● dia com aula &nbsp;—&nbsp; turmas alocadas por professor e horário</div>
-            </div>
-          </div>
-
-          <!-- Tela 4: Financeiro / Previsibilidade -->
-          <div class="demo-screen" data-screen="3">
-            <div class="demo-sidebar">
-              <div class="demo-nav-item">Início</div>
-              <div class="demo-nav-item">Alunos</div>
-              <div class="demo-nav-item">Agenda</div>
-              <div class="demo-nav-item sel">Financeiro</div>
-              <div class="demo-nav-item">Folha</div>
-            </div>
-            <div class="demo-content">
-              <h4>Previsão de receita</h4>
-              <div class="demo-bar-group">
-                <div class="demo-bar-row">
-                  <span class="b-lbl">Executado</span>
-                  <div class="demo-bar-track"><div class="demo-bar-fill g" style="width:78%"></div></div>
-                  <span class="b-val" style="color:var(--success);">R$ 14,3k</span>
-                </div>
-                <div class="demo-bar-row">
-                  <span class="b-lbl">A receber</span>
-                  <div class="demo-bar-track"><div class="demo-bar-fill bl" style="width:18%"></div></div>
-                  <span class="b-val" style="color:var(--accent);">R$ 3,4k</span>
-                </div>
-                <div class="demo-bar-row">
-                  <span class="b-lbl">Inadimplente</span>
-                  <div class="demo-bar-track"><div class="demo-bar-fill w" style="width:4%"></div></div>
-                  <span class="b-val" style="color:var(--warning);">R$ 730</span>
-                </div>
-              </div>
-              <div class="demo-legend" style="margin-top:1rem;">Previsão mês seguinte: <strong style="color:var(--fg);">R$ 18,8k</strong> &nbsp;·&nbsp; Custo folha: <strong style="color:var(--fg);">R$ 8,2k</strong></div>
-            </div>
-          </div>
-        </div>
-        <div class="demo-indicator" id="demo-dots">
-          <span class="on"></span><span></span><span></span><span></span>
+        <div class="demo-stage">
+          <img src="mq7kjmfq-escolasimples-demo.gif" alt="Navegação pelo escolasimples: dashboard, alunos, agenda, financeiro, configuração e landing page" class="demo-gif" />
         </div>
       </div>
     </div>
@@ -1091,13 +959,51 @@
     </div>
   </section>
 
-  <!-- Prova social -->
+  <!-- Depoimentos -->
   <section class="social-strip section">
     <div class="wrap">
-      <div class="testimonial">
-        <blockquote>"Eu passei anos controlando minha escola pelo caderno e pelo WhatsApp. Quando testei o escolasimples, percebi que estava gastando umas 6 horas por semana só fechando planilha. Agora abro o navegador, vejo o que entrou, o que venceu, quem deu aula — e volto a dar aula."</blockquote>
-        <cite>Fernanda C.</cite>
-        <p class="cite-sub">dona de escola de idiomas, São Paulo</p>
+      <div class="section-header">
+        <p class="t-kicker">Depoimentos</p>
+        <h2 class="t-display t-display-lg">Quem viveu o drama,<br>sabe a diferença.</h2>
+      </div>
+      <div class="testimonial-carousel" id="testimonial-carousel">
+        <div class="testimonial-track" id="testimonial-track">
+          <div class="testimonial-slide">
+            <blockquote>"Eu vivia no escuro. Sabia quanto entrava no mês, mas não sabia quanto ia entrar no mês seguinte. O escolasimples me mostrou minha receita prevista com meses de antecedência. Pela primeira vez, consegui planejar trocar de sala sem medo de dar um passo maior que a perna."</blockquote>
+            <cite>Mariana Vilela</cite>
+            <p class="cite-school">Conexão Idiomas</p>
+            <p class="cite-city">São Paulo</p>
+          </div>
+          <div class="testimonial-slide">
+            <blockquote>"Coordenar 8 professores com planilha e grupo de WhatsApp era insustentável. Toda semana alguém trocava horário e eu descobria três dias depois. Agora cada professor vê a própria agenda no sistema, as recorrentes entram sozinhas e eu só supervisiono. Ganhei umas 10 horas por semana de volta."</blockquote>
+            <cite>Carlos Humberto</cite>
+            <p class="cite-school">SpeakUp Centro</p>
+            <p class="cite-city">Belo Horizonte</p>
+          </div>
+          <div class="testimonial-slide">
+            <blockquote>"Moro no litoral e a escola fica na capital. Antes, quando eu viajava, qualquer coisinha virava uma corrente de 30 mensagens. Com o escolasimples, abro no celular, vejo a agenda do dia, confiro os recebíveis e resolvo em dois minutos. Minha equipe nem sente que eu não estou lá."</blockquote>
+            <cite>Lúcia Fernanda</cite>
+            <p class="cite-school">English &amp; Co</p>
+            <p class="cite-city">Florianópolis</p>
+          </div>
+          <div class="testimonial-slide">
+            <blockquote>"Em 2023 o HD do computador da secretaria queimou. Perdemos cinco anos de histórico de alunos, mensalidades, tudo. Foi um pesadelo. Depois daquele trauma, migramos pro escolasimples e nunca mais tive medo de perder nada. Tá tudo na nuvem, com backup automático. Aquela angústia acabou."</blockquote>
+            <cite>Roberta Dantas</cite>
+            <p class="cite-school">Aliança Idiomas</p>
+            <p class="cite-city">Campinas</p>
+          </div>
+          <div class="testimonial-slide">
+            <blockquote>"O que mais me surpreendeu foi o controle dos custos. Eu achava que minha escola era lucrativa, mas quando comecei a cruzar folha de pagamento com receita de cada turma, descobri duas turmas que davam prejuízo havia meses. Reorganizei os horários e o lucro subiu 18% no trimestre seguinte — sem aumentar mensalidade de ninguém."</blockquote>
+            <cite>André Takahashi</cite>
+            <p class="cite-school">TalkEasy</p>
+            <p class="cite-city">Curitiba</p>
+          </div>
+        </div>
+        <div class="testimonial-dots" id="testimonial-dots"></div>
+      </div>
+      <div class="testimonial-arrows">
+        <button class="testimonial-arrow" id="testimonial-prev" aria-label="Depoimento anterior">←</button>
+        <button class="testimonial-arrow" id="testimonial-next" aria-label="Próximo depoimento">→</button>
       </div>
     </div>
   </section>
@@ -1107,53 +1013,77 @@
     <div class="wrap">
       <div class="section-header">
         <p class="t-kicker">Planos</p>
-        <h2 class="t-display t-display-lg">Simples como o resto. Sem letra miúda.</h2>
+        <h2 class="t-display t-display-lg">Do freelancer à escola estabelecida.</h2>
+        <p class="t-body" style="text-align:center;max-width:580px;margin:0.6rem auto 0;">O sistema é o mesmo. O que muda é o tamanho da sua escola.</p>
       </div>
       <div class="price-grid">
         <div class="price-card">
           <h3>Essencial</h3>
-          <p class="t-meta" style="text-align:center;">Pra quem está começando</p>
-          <div class="price-amount">R$ 97<span style="font-size:1rem;font-weight:500;">/mês</span></div>
+          <div class="price-amount">R$ 149<span style="font-size:1.05rem;font-weight:500;">/mês</span></div>
           <p class="price-period">até 50 alunos</p>
-          <ul>
-            <li>Cadastro de alunos e turmas</li>
-            <li>Agenda semanal de aulas</li>
-            <li>Controle de mensalidades</li>
-            <li>Suporte por email</li>
-          </ul>
+          <p class="price-per-student">R$ 2,98 por aluno</p>
+          <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
           <a href="#" class="btn btn-ghost">Começar agora</a>
         </div>
         <div class="price-card featured">
-          <h3>Completo</h3>
-          <p class="t-meta" style="text-align:center;">O mais escolhido</p>
-          <div class="price-amount">R$ 197<span style="font-size:1rem;font-weight:500;">/mês</span></div>
-          <p class="price-period">até 200 alunos</p>
-          <ul>
-            <li>Tudo do Essencial</li>
-            <li>Folha de pagamento de professores</li>
-            <li>Notificações automáticas (WhatsApp e email)</li>
-            <li>Relatórios financeiros</li>
-            <li>Suporte prioritário</li>
-          </ul>
+          <h3>Profissional</h3>
+          <div class="price-amount">R$ 249<span style="font-size:1.05rem;font-weight:500;">/mês</span></div>
+          <p class="price-period">até 100 alunos</p>
+          <p class="price-per-student">R$ 2,49 por aluno</p>
+          <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
           <a href="#" class="btn btn-primary">Começar agora</a>
         </div>
         <div class="price-card">
-          <h3>Escola</h3>
-          <p class="t-meta" style="text-align:center;">Pra escolas maiores</p>
-          <div class="price-amount">R$ 297<span style="font-size:1rem;font-weight:500;">/mês</span></div>
-          <p class="price-period">alunos ilimitados</p>
-          <ul>
-            <li>Tudo do Completo</li>
-            <li>Múltiplos professores admin</li>
-            <li>Portal do professor</li>
-            <li>Exportação contábil</li>
-            <li>Suporte por telefone</li>
-          </ul>
+          <h3>Avançado</h3>
+          <div class="price-amount">R$ 349<span style="font-size:1.05rem;font-weight:500;">/mês</span></div>
+          <p class="price-period">até 300 alunos</p>
+          <p class="price-per-student">R$ 1,16 por aluno</p>
+          <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
           <a href="#" class="btn btn-ghost">Começar agora</a>
         </div>
       </div>
-      <div class="integration-note">
-        <strong>Pronto para integrar</strong> com seu meio de pagamento — Pix, cartão de crédito, boleto. O sistema já está preparado para conversar com o seu gateway assim que você escolher um. Enquanto isso, o controle de mensalidades funciona direto no escolasimples, com baixa manual rápida.
+
+      <div class="price-features">
+        <h3>Todos os planos incluem:</h3>
+        <div class="price-features-grid">
+          <div class="price-feature-item">
+            <strong>Gestão completa de alunos</strong>
+            <span>Cadastro, níveis CEFR, histórico e responsáveis</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Agenda de aulas</strong>
+            <span>Calendário visual (dia, semana, mês), aulas avulsas e recorrentes</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Financeiro integrado</strong>
+            <span>Mensalidades, contas a pagar e a receber</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Folha de pagamento automática</strong>
+            <span>Cálculo do professor baseado nas aulas dadas</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Previsão de caixa</strong>
+            <span>Fluxo de caixa futuro mês a mês</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Turmas e pacotes de aula</strong>
+            <span>Organize alunos por turma, crie combos</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Acesso da equipe</strong>
+            <span>Login separado para cada professor</span>
+          </div>
+          <div class="price-feature-item">
+            <strong>Sua marca na escola</strong>
+            <span>Nome, logo e cores personalizados</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-enterprise">
+        <p><strong>Acima de 300 alunos?</strong> Entre em contato para um plano personalizado.</p>
+        <a href="mailto:henriquedesouza.l@gmail.com">✉ contato@escolasimples.com</a>
       </div>
     </div>
   </section>
@@ -1184,8 +1114,8 @@
         </div>
         <div class="footer-col">
           <h4>Contato</h4>
-          <a href="mailto:oi@escolasimples.com">oi@escolasimples.com</a>
-          <a href="#">WhatsApp</a>
+          <a href="mailto:henriquedesouza.l@gmail.com">contato@escolasimples.com</a>
+          <a href="https://wa.me/5511974732708">WhatsApp</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -1196,49 +1126,73 @@
   </footer>
 
   <script>
+    // ---- Sticky nav ----
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 10);
     }, { passive: true });
 
-    // Demo animada — alterna entre as 4 telas automaticamente
-    (function() {
-      const screens = document.querySelectorAll('.demo-screen');
-      const dots = document.querySelectorAll('#demo-dots span');
-      let cur = 0;
-      const total = screens.length;
+    // ---- Testimonial carousel ----
+    (function () {
+      const track = document.getElementById('testimonial-track');
+      const slides = track.querySelectorAll('.testimonial-slide');
+      const dotsContainer = document.getElementById('testimonial-dots');
+      const prevBtn = document.getElementById('testimonial-prev');
+      const nextBtn = document.getElementById('testimonial-next');
+      const carousel = document.getElementById('testimonial-carousel');
+      let idx = 0;
+      let timer = null;
+      const INTERVAL = 6000;
 
-      function show(i) {
-        screens.forEach(s => s.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('on'));
-        screens[i].classList.add('active');
-        dots[i].classList.add('on');
-      }
-
-      function next() {
-        cur = (cur + 1) % total;
-        show(cur);
-      }
-
-      // Alterna a cada 4 segundos
-      let timer = setInterval(next, 4000);
-
-      // Pausa se o mouse estiver sobre o demo
-      const stage = document.getElementById('demo-stage');
-      if (stage) {
-        stage.addEventListener('mouseenter', () => { clearInterval(timer); });
-        stage.addEventListener('mouseleave', () => { timer = setInterval(next, 4000); });
-      }
-
-      // Click nos dots
-      dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => {
-          clearInterval(timer);
-          cur = i;
-          show(cur);
-          timer = setInterval(next, 4000);
-        });
+      // Build dots
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'testimonial-dot';
+        dot.setAttribute('aria-label', 'Depoimento ' + (i + 1));
+        dot.addEventListener('click', () => go(i));
+        dotsContainer.appendChild(dot);
       });
+      const dots = dotsContainer.querySelectorAll('.testimonial-dot');
+
+      function go(i) {
+        idx = (i + slides.length) % slides.length;
+        track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+        dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+      }
+
+      function next() { go(idx + 1); }
+      function prev() { go(idx - 1); }
+
+      function startTimer() {
+        stopTimer();
+        timer = setInterval(next, INTERVAL);
+      }
+
+      function stopTimer() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      prevBtn.addEventListener('click', () => { prev(); startTimer(); });
+      nextBtn.addEventListener('click', () => { next(); startTimer(); });
+
+      carousel.addEventListener('mouseenter', stopTimer);
+      carousel.addEventListener('mouseleave', startTimer);
+
+      // Touch swipe
+      let touchStartX = 0;
+      carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      carousel.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) {
+          diff > 0 ? next() : prev();
+          startTimer();
+        }
+      });
+
+      go(0);
+      startTimer();
     })();
   </script>
 
