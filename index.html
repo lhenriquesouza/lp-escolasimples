@@ -768,7 +768,98 @@
       }
       html { scroll-behavior: auto; }
     }
+    /* ---- Modal do checkout ---- */
+    #checkout-modal {
+      border: none;
+      border-radius: var(--radius-2);
+      padding: 0;
+      max-width: 480px;
+      width: 90%;
+      background: var(--surface);
+      box-shadow: var(--shadow-2);
+      color: var(--fg);
+    }
+    #checkout-modal::backdrop {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(2px);
+    }
+    .modal-inner {
+      padding: 2rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      border: none;
+      background: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .modal-plan {
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+    }
+    .modal-plan strong {
+      color: var(--accent);
+    }
+    #checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    #checkout-form label {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+      gap: 0.25rem;
+    }
+    #checkout-form input,
+    #checkout-form select {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-1);
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      background: var(--surface);
+      color: var(--fg);
+      transition: border-color 0.15s;
+    }
+    #checkout-form input:focus,
+    #checkout-form select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+    }
+    #checkout-form input:invalid:not(:placeholder-shown),
+    #checkout-form select:invalid:not(:placeholder-shown) {
+      border-color: var(--danger);
+    }
+    .modal-row {
+      display: grid;
+      grid-template-columns: 1fr 90px;
+      gap: 0.75rem;
+    }
+    .btn-full {
+      width: 100%;
+      margin-top: 0.25rem;
+    }
   </style>
+  <script>
+    /* Auto-detectar ambiente: local → localhost:3001, prod → api.escolasimples.com */
+    (() => {
+      const proto = window.location.protocol;
+      const host = window.location.hostname;
+      window.CHECKOUT_BASE =
+        proto === 'file:' || host === 'localhost' || host === '127.0.0.1'
+          ? 'http://localhost:3001'
+          : 'https://api.escolasimples.com';
+    })();
+  </script>
 </head>
 <body>
 
@@ -791,7 +882,7 @@
     <div class="wrap hero-inner">
       <div class="hero-text">
         <h1 class="t-display t-display-xl">Sua escola não é uma planilha.</h1>
-        <p class="t-body">O escolasimples organiza alunos, mensalidades, agenda e folha de pagamento num lugar só — pra você voltar a fazer o que importa: ensinar.</p>
+        <p class="t-body">O escolasimples é um Vertical SaaS de gestão para pequenas e médias escolas de idiomas no Brasil. Unifica controle de turmas, alocação de professores e salas, recorrência financeira de mensalidades, contas a pagar e receber, cálculo automatizado de hora-aula e folha de pagamento. Tudo num lugar só — pra você voltar a fazer o que importa: ensinar.</p>
         <div class="hero-actions">
           <a href="#planos" class="btn btn-primary">Conhecer planos</a>
           <a href="#demo" class="btn btn-ghost">Ver o sistema em ação</a>
@@ -1023,7 +1114,7 @@
           <p class="price-period">até 50 alunos</p>
           <p class="price-per-student">R$ 2,98 por aluno</p>
           <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
-          <a href="#" class="btn btn-ghost">Começar agora</a>
+          <a href="#" class="btn btn-ghost" data-plan="essencial">Começar agora</a>
         </div>
         <div class="price-card featured">
           <h3>Profissional</h3>
@@ -1031,7 +1122,7 @@
           <p class="price-period">até 100 alunos</p>
           <p class="price-per-student">R$ 2,49 por aluno</p>
           <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
-          <a href="#" class="btn btn-primary">Começar agora</a>
+          <a href="#" class="btn btn-primary" data-plan="profissional">Começar agora</a>
         </div>
         <div class="price-card">
           <h3>Avançado</h3>
@@ -1039,7 +1130,7 @@
           <p class="price-period">até 300 alunos</p>
           <p class="price-per-student">R$ 1,16 por aluno</p>
           <p class="price-per-note">Valor fixo — o custo por aluno é só uma referência de quanto custa gerenciar cada um.</p>
-          <a href="#" class="btn btn-ghost">Começar agora</a>
+          <a href="#" class="btn btn-ghost" data-plan="avancado">Começar agora</a>
         </div>
       </div>
 
@@ -1193,6 +1284,100 @@
 
       go(0);
       startTimer();
+    })();
+  </script>
+
+  <!-- ── Modal do Checkout ──────────────────────────────── -->
+  <dialog id="checkout-modal">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Fechar">&times;</button>
+      <h2 style="margin:0 0 0.35rem;font-size:1.35rem;">Comece agora</h2>
+      <p class="modal-plan">Plano <strong id="modal-plan-name">Essencial</strong></p>
+
+      <form id="checkout-form" method="GET" novalidate>
+        <input type="hidden" name="plan" id="modal-plan-input" value="essencial">
+
+        <label>
+          Nome completo *
+          <input type="text" name="name" required autocomplete="name" placeholder="Seu nome completo">
+        </label>
+
+        <label>
+          Email *
+          <input type="email" name="email" required autocomplete="email" placeholder="seu@email.com">
+        </label>
+
+        <label>
+          Nome da escola *
+          <input type="text" name="school" required placeholder="Nome da sua escola">
+        </label>
+
+        <div class="modal-row">
+          <label>
+            Cidade *
+            <input type="text" name="city" required autocomplete="address-level2" placeholder="Sua cidade">
+          </label>
+          <label>
+            Estado *
+            <select name="state" required>
+              <option value="">UF</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+              <option>SP</option><option>SE</option><option>TO</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Celular / WhatsApp
+          <input type="tel" name="phone" autocomplete="tel" placeholder="(11) 99999-0000">
+        </label>
+
+        <label>
+          CNPJ (opcional)
+          <input type="text" name="cnpj" pattern="[0-9]{14}" placeholder="Apenas números, 14 dígitos">
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-full">Continuar para checkout</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- ── JS do modal ────────────────────────────────────── -->
+  <script>
+    (() => {
+      // Abrir modal ao clicar "Começar agora"
+      document.querySelectorAll('[data-plan]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const plan = btn.dataset.plan;
+          document.getElementById('modal-plan-name').textContent =
+            plan.charAt(0).toUpperCase() + plan.slice(1);
+          document.getElementById('modal-plan-input').value = plan;
+          document.getElementById('checkout-modal').showModal();
+        });
+      });
+
+      // Submit → redirect para core
+      document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = e.target;
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        const params = new URLSearchParams(new FormData(form));
+        window.location.href = CHECKOUT_BASE + '/checkout?' + params.toString();
+      });
+
+      // Fechar ao clicar no backdrop
+      document.getElementById('checkout-modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) e.currentTarget.close();
+      });
     })();
   </script>
 

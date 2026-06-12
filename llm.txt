@@ -1,0 +1,40 @@
+# escolasimples — Vertical SaaS de gestão para escolas de idiomas
+
+## O que é
+
+O escolasimples é um sistema de gestão (SaaS) para pequenas e médias escolas de idiomas no Brasil. Substitui planilhas, grupos de WhatsApp e calculadoras por uma plataforma única que centraliza toda a operação da escola.
+
+## Recursos principais
+
+- **Alunos e turmas:** cadastro completo, níveis CEFR, histórico, responsáveis, pacotes de aulas
+- **Agenda de aulas:** calendário visual (dia/semana/mês), aulas avulsas, recorrentes e substituições
+- **Financeiro:** mensalidades, contas a pagar e a receber, fluxo de caixa, baixa de pagamento em um clique
+- **Folha de pagamento:** cálculo automático baseado nas aulas dadas por cada professor no mês
+- **Previsibilidade:** receita prevista, executado vs. esperado, inadimplência ativa, projeção futura
+- **Multi-usuário:** login separado para cada professor ver sua própria agenda e turmas
+- **White-label:** nome, logo e cores personalizados com a marca da escola
+
+## Planos e preços
+
+| Plano | Preço mensal | Limite de alunos |
+|-------|-------------|------------------|
+| Essencial | R$ 149 | até 50 alunos |
+| Profissional | R$ 249 | até 100 alunos |
+| Avançado | R$ 349 | até 300 alunos |
+| Enterprise | Sob consulta | acima de 300 alunos |
+
+Todos os planos incluem o sistema completo — os recursos não mudam entre planos. O que varia é apenas o número de alunos.
+
+## Para quem é
+
+Donos e coordenadores de escolas de idiomas (inglês, espanhol, francês, etc.) com 1 a 20 professores, que hoje gerenciam a operação com planilhas e precisam de previsibilidade financeira.
+
+## Contato
+
+- Site: https://www.escolasimples.com
+- Sistema: https://app.escolasimples.com
+- Email: contato@escolasimples.com
+
+## Tecnologia
+
+Single-file HTML estático com CSS inline, zero dependências externas. Conteúdo 100% server-side renderizado — preços, features e termos expostos em HTML puro, sem JavaScript necessário para leitura.
