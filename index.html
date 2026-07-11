@@ -773,8 +773,8 @@
       border: none;
       border-radius: var(--radius-2);
       padding: 0;
-      max-width: 480px;
-      width: 90%;
+      max-width: 560px;
+      width: 92%;
       background: var(--surface);
       box-shadow: var(--shadow-2);
       color: var(--fg);
@@ -784,7 +784,8 @@
       backdrop-filter: blur(2px);
     }
     .modal-inner {
-      padding: 2rem;
+      position: relative;
+      padding: 2.25rem 2rem 2rem;
     }
     .modal-close {
       position: absolute;
@@ -796,6 +797,12 @@
       cursor: pointer;
       color: var(--muted);
       line-height: 1;
+    }
+    .modal-logo {
+      display: block;
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 0.75rem;
     }
     .modal-plan {
       color: var(--muted);
@@ -849,9 +856,16 @@
       margin-top: 0.25rem;
     }
   </style>
+
+  <!-- ── Configuração do checkout ────────────────────────────
+       Altere CHECKOUT_MODE para alternar entre os fluxos:
+         'whatsapp' → coleta dados e abre WhatsApp
+         'abacate'  → redireciona para o gateway Abacate Pay
+  -->
   <script>
-    /* Auto-detectar ambiente: local → localhost:3001, prod → api.escolasimples.com */
     (() => {
+      window.CHECKOUT_MODE = 'whatsapp';  // ← troque para 'abacate' quando quiser voltar
+
       const proto = window.location.protocol;
       const host = window.location.hostname;
       window.CHECKOUT_BASE =
@@ -860,6 +874,7 @@
           : 'https://api.escolasimples.com';
     })();
   </script>
+
 </head>
 <body>
 
@@ -1291,10 +1306,11 @@
   <dialog id="checkout-modal">
     <div class="modal-inner">
       <button class="modal-close" onclick="this.closest('dialog').close()" aria-label="Fechar">&times;</button>
+      <img class="modal-logo" src="brand-icon.svg" alt="escolasimples" width="48" height="48">
       <h2 style="margin:0 0 0.35rem;font-size:1.35rem;">Comece agora</h2>
       <p class="modal-plan">Plano <strong id="modal-plan-name">Essencial</strong></p>
 
-      <form id="checkout-form" method="GET" novalidate>
+      <form id="checkout-form" novalidate>
         <input type="hidden" name="plan" id="modal-plan-input" value="essencial">
 
         <label>
@@ -1334,7 +1350,7 @@
 
         <label>
           Celular / WhatsApp
-          <input type="tel" name="phone" autocomplete="tel" placeholder="(11) 99999-0000">
+          <input type="tel" name="phone" autocomplete="tel" placeholder="(11) 99999-0000" required>
         </label>
 
         <label>
@@ -1342,7 +1358,7 @@
           <input type="text" name="cnpj" pattern="[0-9]{14}" placeholder="Apenas números, 14 dígitos">
         </label>
 
-        <button type="submit" class="btn btn-primary btn-full">Continuar para checkout</button>
+        <button type="submit" class="btn btn-primary btn-full">Quero este plano</button>
       </form>
     </div>
   </dialog>
@@ -1362,7 +1378,7 @@
         });
       });
 
-      // Submit → redirect para core
+      // Submit — roteia conforme CHECKOUT_MODE
       document.getElementById('checkout-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const form = e.target;
@@ -1370,8 +1386,40 @@
           form.reportValidity();
           return;
         }
-        const params = new URLSearchParams(new FormData(form));
-        window.location.href = CHECKOUT_BASE + '/checkout?' + params.toString();
+
+        if (window.CHECKOUT_MODE === 'abacate') {
+          // ── Fluxo Abacate Pay (redirect) ──
+          const params = new URLSearchParams(new FormData(form));
+          window.location.href = CHECKOUT_BASE + '/checkout?' + params.toString();
+          return;
+        }
+
+        // ── Fluxo WhatsApp (lead + abertura de conversa) ──
+        const data = new FormData(form);
+        const plan     = data.get('plan');
+        const name     = data.get('name');
+        const email    = data.get('email');
+        const school   = data.get('school');
+        const city     = data.get('city');
+        const state    = data.get('state');
+        const phone    = data.get('phone');
+        const cnpj     = data.get('cnpj');
+
+        const planLabel = { essencial: 'Essencial', profissional: 'Profissional', avancado: 'Avançado' }[plan] || plan;
+
+        let msg = 'Olá! Tenho interesse no escolasimples.%0A%0A';
+        msg += '📋 *Novo lead*%0A';
+        msg += `Plano: ${planLabel}%0A`;
+        msg += `Nome: ${name}%0A`;
+        msg += `Escola: ${school}%0A`;
+        msg += `Cidade: ${city}/${state}%0A`;
+        msg += `WhatsApp: ${phone}%0A`;
+        msg += `Email: ${email}%0A`;
+        if (cnpj) msg += `CNPJ: ${cnpj}%0A`;
+        msg += '%0AAguardo contato para iniciar!';
+
+        document.getElementById('checkout-modal').close();
+        window.open(`https://wa.me/5511974732708?text=${msg}`, '_blank');
       });
 
       // Fechar ao clicar no backdrop
