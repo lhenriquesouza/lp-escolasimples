@@ -864,8 +864,7 @@
   -->
   <script>
     (() => {
-      window.CHECKOUT_MODE = 'whatsapp';  // ← troque para 'abacate' quando quiser voltar
-
+      window.CHECKOUT_MODE = 'whatsapp';
       const proto = window.location.protocol;
       const host = window.location.hostname;
       window.CHECKOUT_BASE =
@@ -874,6 +873,50 @@
           : 'https://api.escolasimples.com';
     })();
   </script>
+
+  <!-- ── Detecção de tráfego pago ───────────────────── -->
+  <script>
+    (() => {
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('utm_source')?.includes('google') || p.get('gclid') || p.get('utm_medium') === 'cpc') {
+        const fn = () => {
+          const el = document.getElementById('planos');
+          if (el) { el.scrollIntoView({ behavior: 'instant' });
+            const btn = document.querySelector('[data-plan="profissional"]');
+            if (btn) setTimeout(() => btn.click(), 500);
+          }
+        };
+        document.readyState === 'loading'
+          ? document.addEventListener('DOMContentLoaded', fn)
+          : fn();
+      }
+    })();
+  </script>
+
+  <!-- ── Google Tag (gtag.js) ────────────────────────── -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1017732989"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-1017732989');
+  </script>
+
+  <!-- ── Meta Pixel ──────────────────────────────────── -->
+  <script>
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1304372238478913');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1304372238478913&ev=PageView&noscript=1"/></noscript>
 
 </head>
 <body>
@@ -1385,6 +1428,14 @@
         if (!form.checkValidity()) {
           form.reportValidity();
           return;
+        }
+
+        // ── Eventos de conversão ──
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', { send_to: 'AW-1017732989' });
+        }
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead');
         }
 
         if (window.CHECKOUT_MODE === 'abacate') {
