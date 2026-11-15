@@ -433,102 +433,6 @@
       line-height: 1.5;
     }
 
-    /* ---- Social proof / Depoimentos ---- */
-    .social-strip {
-      background: var(--surface-subtle);
-      border-top: var(--line);
-      border-bottom: var(--line);
-    }
-    .testimonial-carousel {
-      position: relative;
-      max-width: 720px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-    .testimonial-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .testimonial-slide {
-      flex: 0 0 100%;
-      text-align: center;
-      padding: 1rem 0.5rem 2.5rem;
-    }
-    .testimonial-slide blockquote {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-      font-style: italic;
-      line-height: 1.55;
-      color: var(--fg);
-      margin-bottom: 1.25rem;
-      max-width: 620px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .testimonial-slide cite {
-      font-style: normal;
-      font-weight: 650;
-      color: var(--fg);
-      display: block;
-      margin-bottom: 0.1rem;
-    }
-    .testimonial-slide .cite-school {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.1rem;
-    }
-    .testimonial-slide .cite-city {
-      font-size: 0.82rem;
-      color: var(--muted);
-      opacity: 0.7;
-    }
-    .testimonial-dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-    }
-    .testimonial-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      border: none;
-      cursor: pointer;
-      transition: background 0.25s, transform 0.25s;
-      padding: 0;
-    }
-    .testimonial-dot.active {
-      background: var(--accent);
-      transform: scale(1.35);
-    }
-    .testimonial-arrows {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .testimonial-arrow {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: var(--line);
-      background: var(--surface);
-      color: var(--fg);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .testimonial-arrow:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
     /* ---- Pricing ---- */
     .price-grid {
       display: grid;
@@ -936,7 +840,7 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero" id="hero">
     <div class="wrap hero-inner">
       <div class="hero-text">
         <h1 class="t-display t-display-xl">Sua escola não é uma planilha.</h1>
@@ -1108,55 +1012,6 @@
     </div>
   </section>
 
-  <!-- Depoimentos -->
-  <section class="social-strip section">
-    <div class="wrap">
-      <div class="section-header">
-        <p class="t-kicker">Depoimentos</p>
-        <h2 class="t-display t-display-lg">Quem viveu o drama,<br>sabe a diferença.</h2>
-      </div>
-      <div class="testimonial-carousel" id="testimonial-carousel">
-        <div class="testimonial-track" id="testimonial-track">
-          <div class="testimonial-slide">
-            <blockquote>"Eu vivia no escuro. Sabia quanto entrava no mês, mas não sabia quanto ia entrar no mês seguinte. O escolasimples me mostrou minha receita prevista com meses de antecedência. Pela primeira vez, consegui planejar trocar de sala sem medo de dar um passo maior que a perna."</blockquote>
-            <cite>Mariana Vilela</cite>
-            <p class="cite-school">Conexão Idiomas</p>
-            <p class="cite-city">São Paulo</p>
-          </div>
-          <div class="testimonial-slide">
-            <blockquote>"Coordenar 8 professores com planilha e grupo de WhatsApp era insustentável. Toda semana alguém trocava horário e eu descobria três dias depois. Agora cada professor vê a própria agenda no sistema, as recorrentes entram sozinhas e eu só supervisiono. Ganhei umas 10 horas por semana de volta."</blockquote>
-            <cite>Carlos Humberto</cite>
-            <p class="cite-school">SpeakUp Centro</p>
-            <p class="cite-city">Belo Horizonte</p>
-          </div>
-          <div class="testimonial-slide">
-            <blockquote>"Moro no litoral e a escola fica na capital. Antes, quando eu viajava, qualquer coisinha virava uma corrente de 30 mensagens. Com o escolasimples, abro no celular, vejo a agenda do dia, confiro os recebíveis e resolvo em dois minutos. Minha equipe nem sente que eu não estou lá."</blockquote>
-            <cite>Lúcia Fernanda</cite>
-            <p class="cite-school">English &amp; Co</p>
-            <p class="cite-city">Florianópolis</p>
-          </div>
-          <div class="testimonial-slide">
-            <blockquote>"Em 2023 o HD do computador da secretaria queimou. Perdemos cinco anos de histórico de alunos, mensalidades, tudo. Foi um pesadelo. Depois daquele trauma, migramos pro escolasimples e nunca mais tive medo de perder nada. Tá tudo na nuvem, com backup automático. Aquela angústia acabou."</blockquote>
-            <cite>Roberta Dantas</cite>
-            <p class="cite-school">Aliança Idiomas</p>
-            <p class="cite-city">Campinas</p>
-          </div>
-          <div class="testimonial-slide">
-            <blockquote>"O que mais me surpreendeu foi o controle dos custos. Eu achava que minha escola era lucrativa, mas quando comecei a cruzar folha de pagamento com receita de cada turma, descobri duas turmas que davam prejuízo havia meses. Reorganizei os horários e o lucro subiu 18% no trimestre seguinte — sem aumentar mensalidade de ninguém."</blockquote>
-            <cite>André Takahashi</cite>
-            <p class="cite-school">TalkEasy</p>
-            <p class="cite-city">Curitiba</p>
-          </div>
-        </div>
-        <div class="testimonial-dots" id="testimonial-dots"></div>
-      </div>
-      <div class="testimonial-arrows">
-        <button class="testimonial-arrow" id="testimonial-prev" aria-label="Depoimento anterior">←</button>
-        <button class="testimonial-arrow" id="testimonial-next" aria-label="Próximo depoimento">→</button>
-      </div>
-    </div>
-  </section>
-
   <!-- Planos -->
   <section class="section" id="planos">
     <div class="wrap">
@@ -1254,12 +1109,13 @@
           <a href="#planos">Planos</a>
           <a href="#como-funciona">Como funciona</a>
           <a href="#demo">Ver o sistema</a>
+          <a href="/blog/">Blog</a>
         </div>
         <div class="footer-col">
           <h4>Empresa</h4>
-          <a href="#">Sobre</a>
+          <a href="#hero">Sobre</a>
           <a href="#">Contato</a>
-          <a href="#">Privacidade</a>
+          <a href="/privacidade/">Privacidade</a>
         </div>
         <div class="footer-col">
           <h4>Contato</h4>
@@ -1281,68 +1137,6 @@
       nav.classList.toggle('scrolled', window.scrollY > 10);
     }, { passive: true });
 
-    // ---- Testimonial carousel ----
-    (function () {
-      const track = document.getElementById('testimonial-track');
-      const slides = track.querySelectorAll('.testimonial-slide');
-      const dotsContainer = document.getElementById('testimonial-dots');
-      const prevBtn = document.getElementById('testimonial-prev');
-      const nextBtn = document.getElementById('testimonial-next');
-      const carousel = document.getElementById('testimonial-carousel');
-      let idx = 0;
-      let timer = null;
-      const INTERVAL = 6000;
-
-      // Build dots
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'testimonial-dot';
-        dot.setAttribute('aria-label', 'Depoimento ' + (i + 1));
-        dot.addEventListener('click', () => go(i));
-        dotsContainer.appendChild(dot);
-      });
-      const dots = dotsContainer.querySelectorAll('.testimonial-dot');
-
-      function go(i) {
-        idx = (i + slides.length) % slides.length;
-        track.style.transform = 'translateX(' + (-idx * 100) + '%)';
-        dots.forEach((d, j) => d.classList.toggle('active', j === idx));
-      }
-
-      function next() { go(idx + 1); }
-      function prev() { go(idx - 1); }
-
-      function startTimer() {
-        stopTimer();
-        timer = setInterval(next, INTERVAL);
-      }
-
-      function stopTimer() {
-        if (timer) { clearInterval(timer); timer = null; }
-      }
-
-      prevBtn.addEventListener('click', () => { prev(); startTimer(); });
-      nextBtn.addEventListener('click', () => { next(); startTimer(); });
-
-      carousel.addEventListener('mouseenter', stopTimer);
-      carousel.addEventListener('mouseleave', startTimer);
-
-      // Touch swipe
-      let touchStartX = 0;
-      carousel.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-      }, { passive: true });
-      carousel.addEventListener('touchend', (e) => {
-        const diff = touchStartX - e.changedTouches[0].clientX;
-        if (Math.abs(diff) > 40) {
-          diff > 0 ? next() : prev();
-          startTimer();
-        }
-      });
-
-      go(0);
-      startTimer();
-    })();
   </script>
 
   <!-- ── Modal do Checkout ──────────────────────────────── -->

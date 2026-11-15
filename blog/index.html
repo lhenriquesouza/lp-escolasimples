@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — escolasimples</title>
+  <meta name="description" content="Artigos do escolasimples sobre controle de aulas particulares e gestão de escola de idiomas." />
+  <link rel="canonical" href="https://www.escolasimples.com/blog/" />
+  <style>
+    :root {
+      --bg: oklch(98.6% 0.004 246);
+      --surface: oklch(100% 0 0);
+      --surface-subtle: oklch(96.7% 0.007 246);
+      --surface-inset: oklch(94.2% 0.01 246);
+      --fg: oklch(20.5% 0.02 246);
+      --muted: oklch(47.5% 0.015 246);
+      --border: oklch(88.8% 0.01 246);
+      --accent: oklch(55% 0.18 258);
+      --accent-strong: oklch(47% 0.19 258);
+      --accent-2: oklch(57% 0.12 154);
+      --success: oklch(58% 0.14 146);
+      --warning: oklch(76% 0.15 74);
+      --danger: oklch(61% 0.18 25);
+      --info: oklch(60% 0.1 236);
+      --indigo: #2d325a;
+      --gold: #e8a850;
+      --cta: #156CDD;
+
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --radius-1: 10px;
+      --radius-2: 16px;
+      --radius-3: 24px;
+      --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.04);
+      --shadow-2: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --line: 1px solid var(--border);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body { min-height: 100vh; }
+    img, svg { display: block; max-width: 100%; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--cta);
+      outline-offset: 3px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: oklch(98.6% 0.004 246 / 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--border); }
+    .nav-inner {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1rem;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      min-width: 0;
+    }
+    .nav-logo svg { height: 34px; width: auto; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      background: var(--fg);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent-strong); transform: translateY(-1px); }
+
+    .wrap {
+      width: min(720px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+    }
+    main { padding: 2.5rem 0 4.5rem; }
+
+    .crumb {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .crumb a { color: var(--muted); text-decoration: none; }
+    .crumb a:hover { color: var(--cta); }
+
+    .prose h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      font-size: clamp(1.7rem, 3.4vw, 2.45rem);
+      text-wrap: balance;
+      margin-bottom: 1.25rem;
+    }
+    .prose h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      font-size: clamp(1.28rem, 2.2vw, 1.65rem);
+      margin: 2.2rem 0 0.75rem;
+    }
+    .prose p { margin: 0.85rem 0; font-size: 1.05rem; line-height: 1.7; }
+    .prose ul { margin: 0.4rem 0 1rem 1.2rem; }
+    .prose li { margin: 0.4rem 0; line-height: 1.6; padding-left: 0.2rem; }
+    .prose a { color: var(--cta); text-underline-offset: 0.15em; }
+    .prose a:hover { color: var(--accent-strong); }
+    .prose strong { font-weight: 700; }
+    .prose code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--surface-inset);
+      padding: 0.12em 0.4em;
+      border-radius: 6px;
+      overflow-wrap: anywhere;
+    }
+    .prose blockquote {
+      margin: 1.1rem 0;
+      padding: 0.15rem 0 0.15rem 1rem;
+      border-left: 3px solid var(--gold);
+    }
+    .prose blockquote p { margin: 0.4rem 0; }
+
+    .table-scroll {
+      overflow-x: auto;
+      margin: 1rem 0 1.3rem;
+      border: var(--line);
+      border-radius: var(--radius-1);
+      background: var(--surface);
+      -webkit-overflow-scrolling: touch;
+    }
+    .prose table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 36rem;
+      font-size: 0.92rem;
+    }
+    .prose th, .prose td {
+      border-bottom: var(--line);
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose tr:last-child td { border-bottom: 0; }
+    .prose th {
+      background: var(--surface-subtle);
+      font-weight: 650;
+      color: var(--fg);
+    }
+
+    .post-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+    .post-list a {
+      display: block;
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      padding: 1.2rem 1.3rem;
+      text-decoration: none;
+      box-shadow: var(--shadow-1);
+    }
+    .post-list a:hover { border-color: color-mix(in oklab, var(--cta) 45%, var(--border)); }
+    .post-list h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--fg);
+      margin: 0 0 0.45rem;
+    }
+    .post-list a:hover h2 { color: var(--cta); }
+    .post-list p { color: var(--muted); font-size: 0.98rem; line-height: 1.55; margin: 0; }
+
+    .footer {
+      border-top: var(--line);
+      padding: 3rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer .wrap-wide {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.25rem 0;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: var(--line);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      main { padding: 1.75rem 0 3rem; }
+      .nav-cta { padding: 0.5rem 0.9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="escolasimples — início">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="34" role="img" aria-label="escolasimples">
+          <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+          <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+          <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+        </svg>
+      </a>
+      <a href="/#planos" class="nav-cta">Ver planos</a>
+    </div>
+  </nav>
+  <main>
+    <div class="wrap">
+      <article class="prose">
+        <h1>Blog</h1>
+        <ul class="post-list">
+        <li>
+          <a href="/blog/controle-de-aulas-particulares/">
+            <h2>Controle de aulas particulares: o que anotar, uma planilha modelo e quando trocar por um sistema</h2>
+            <p>Como fazer o controle de aulas particulares: as colunas que a planilha precisa ter, como tratar faltas e pacotes e quando vale passar para um sistema.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/blog/sistema-para-escola-de-idiomas/">
+            <h2>Sistema para escola de idiomas: 8 perguntas para fazer antes de sair da planilha</h2>
+            <p>O que perguntar antes de escolher um sistema para escola de idiomas: agenda com vários professores, pacotes, presença, financeiro, acessos e exportação de dados.</p>
+          </a>
+        </li>
+        <li>
+          <a href="/blog/falta-remarcacao-e-reposicao-de-aulas/">
+            <h2>Aluno faltou: como combinar remarcação, reposição e cobrança de aulas particulares</h2>
+            <p>Regras simples para falta, remarcação e reposição em aulas particulares e escolas de idiomas, com um modelo de cláusula e como registrar cada caso.</p>
+          </a>
+        </li>
+        </ul>
+      </article>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap-wide">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="28" style="margin-bottom:0.75rem;" role="img" aria-label="escolasimples">
+            <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+            <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+            <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+          </svg>
+          <p style="font-size:0.85rem;max-width:260px;">Gestão simples para escolas de idiomas. Feito por quem já viveu o drama da planilha.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <a href="/#planos">Planos</a>
+          <a href="/#como-funciona">Como funciona</a>
+          <a href="/#demo">Ver o sistema</a>
+          <a href="/blog/">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/#hero">Sobre</a>
+          <a href="/#">Contato</a>
+          <a href="/privacidade/">Privacidade</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="mailto:henriquedesouza.l@gmail.com">contato@escolasimples.com</a>
+          <a href="https://wa.me/551151044080">WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 escolasimples</span>
+        <span style="color:var(--muted);display:inline-flex;align-items:center;gap:6px;">Feito no Brasil <svg width="14" height="11" viewBox="0 0 14 11" aria-hidden="true"><rect x="0" y="0" width="14" height="11" rx="1" fill="#009b3a"/><path d="M2.5 5.5L7 1.5L11.5 5.5L7 9.5Z" fill="#fedf00"/><circle cx="7" cy="5.5" r="3" fill="#002776"/></svg></span>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  </script>
+</body>
+</html>
