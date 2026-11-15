@@ -16,7 +16,7 @@ Use este guia para cadastrar o escolasimples nas plataformas. Copie e cole os ca
 | **País** | Brasil |
 | **Idioma** | Português (Brasil) |
 | **Ano de fundação** | 2024 |
-| **Preço inicial** | R$ 149/mês |
+| **Preço inicial** | R$ 79/mês |
 
 ---
 
@@ -37,7 +37,7 @@ da escola.
 Com o escolasimples, você tem:
 
 — Cadastro completo de alunos com níveis CEFR, histórico e responsáveis
-— Agenda visual de aulas (dia, semana, mês) com alocação de professores e salas
+— Agenda visual de aulas (dia, semana, mês) com alocação de professores
 — Financeiro integrado: mensalidades, contas a pagar e a receber, fluxo de caixa
 — Baixa de pagamento em um clique
 — Folha de pagamento automática baseada nas aulas dadas por cada professor
@@ -46,7 +46,7 @@ Com o escolasimples, você tem:
 — White-label: nome, logo e cores da sua escola
 
 O sistema é o mesmo para todos os planos — o que muda é o número de alunos.
-Planos a partir de R$ 149/mês (até 50 alunos).
+Planos a partir de R$ 79/mês (até 50 alunos).
 ```
 
 ---
@@ -82,9 +82,9 @@ Planos a partir de R$ 149/mês (até 50 alunos).
 
 | Plano | Preço | Alunos | Preço por aluno |
 |-------|-------|--------|-----------------|
-| Essencial | R$ 149/mês | até 50 | R$ 2,98 |
-| Profissional | R$ 249/mês | até 100 | R$ 2,49 |
-| Avançado | R$ 349/mês | até 300 | R$ 1,16 |
+| Essencial | R$ 79/mês | até 50 | R$ 1,58 |
+| Profissional | R$ 149/mês | até 100 | R$ 1,49 |
+| Avançado | R$ 249/mês | até 300 | R$ 0,83 |
 | Enterprise | Sob consulta | 300+ | — |
 
 *Valores fixos. Recursos idênticos em todos os planos — muda apenas o número de alunos.*

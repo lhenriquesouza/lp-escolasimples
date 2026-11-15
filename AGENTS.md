@@ -54,7 +54,7 @@ Cores no espaco `oklch`. Sempre usar `color-mix(in oklab, ...)` para variacoes s
 5. **Demo** — iframe simulado (chrome fake) com GIF animado do produto
 6. **Modulos** — 6 cards (Alunos, Financeiro, Agenda, Professores, Folha, Previsibilidade)
 7. **Depoimentos** — carrossel com 5 slides, dots, arrows, autoplay 6s, touch swipe
-8. **Planos** — 3 cards (Essencial R$149, Profissional R$249 destacado, Avancado R$349), features comuns, contato enterprise
+8. **Planos** — 3 cards (Essencial R$79, Profissional R$149 destacado, Avancado R$249), features comuns, contato enterprise
 9. **Footer** — 4 colunas (logo, Produto, Empresa, Contato), bandeira do Brasil
 
 ## Convencoes
@@ -78,6 +78,6 @@ Cores no espaco `oklch`. Sempre usar `color-mix(in oklab, ...)` para variacoes s
 - Nao adicionar dependencias externas (CDN, fonts, frameworks). A pagina e propositalmente zero-dependencia.
 - Nao quebrar o single-file: CSS e JS ficam inline no HTML.
 - Manter os depoimentos realistas — sao ficticios mas verossimeis, com nome, escola e cidade.
-- Precos dos planos alinhados com o produto real (Essencial R$149, Profissional R$249, Avancado R$349).
+- Precos dos planos alinhados com o produto real (Essencial R$79, Profissional R$149, Avancado R$249).
 - Respeitar `prefers-reduced-motion` em qualquer animacao nova.
 - Testar nos breakpoints 900px e 600px apos cada mudanca visual.
