@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacidade — escolasimples</title>
+  <meta name="description" content="Quais dados o site e o aplicativo do escolasimples coletam, para que servem, com quem são compartilhados e como exercer os direitos da LGPD." />
+  <link rel="canonical" href="https://www.escolasimples.com/privacidade/" />
+  <style>
+    :root {
+      --bg: oklch(98.6% 0.004 246);
+      --surface: oklch(100% 0 0);
+      --surface-subtle: oklch(96.7% 0.007 246);
+      --surface-inset: oklch(94.2% 0.01 246);
+      --fg: oklch(20.5% 0.02 246);
+      --muted: oklch(47.5% 0.015 246);
+      --border: oklch(88.8% 0.01 246);
+      --accent: oklch(55% 0.18 258);
+      --accent-strong: oklch(47% 0.19 258);
+      --accent-2: oklch(57% 0.12 154);
+      --success: oklch(58% 0.14 146);
+      --warning: oklch(76% 0.15 74);
+      --danger: oklch(61% 0.18 25);
+      --info: oklch(60% 0.1 236);
+      --indigo: #2d325a;
+      --gold: #e8a850;
+      --cta: #156CDD;
+
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+      --radius-1: 10px;
+      --radius-2: 16px;
+      --radius-3: 24px;
+      --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.04);
+      --shadow-2: 0 18px 40px rgba(15, 23, 42, 0.12);
+      --line: 1px solid var(--border);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body { min-height: 100vh; }
+    img, svg { display: block; max-width: 100%; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--cta);
+      outline-offset: 3px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: oklch(98.6% 0.004 246 / 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--border); }
+    .nav-inner {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1rem;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      min-width: 0;
+    }
+    .nav-logo svg { height: 34px; width: auto; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      background: var(--fg);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--accent-strong); transform: translateY(-1px); }
+
+    .wrap {
+      width: min(720px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+    }
+    main { padding: 2.5rem 0 4.5rem; }
+
+    .crumb {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .crumb a { color: var(--muted); text-decoration: none; }
+    .crumb a:hover { color: var(--cta); }
+
+    .prose h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      font-size: clamp(1.7rem, 3.4vw, 2.45rem);
+      text-wrap: balance;
+      margin-bottom: 1.25rem;
+    }
+    .prose h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      font-size: clamp(1.28rem, 2.2vw, 1.65rem);
+      margin: 2.2rem 0 0.75rem;
+    }
+    .prose p { margin: 0.85rem 0; font-size: 1.05rem; line-height: 1.7; }
+    .prose ul { margin: 0.4rem 0 1rem 1.2rem; }
+    .prose li { margin: 0.4rem 0; line-height: 1.6; padding-left: 0.2rem; }
+    .prose a { color: var(--cta); text-underline-offset: 0.15em; }
+    .prose a:hover { color: var(--accent-strong); }
+    .prose strong { font-weight: 700; }
+    .prose code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--surface-inset);
+      padding: 0.12em 0.4em;
+      border-radius: 6px;
+      overflow-wrap: anywhere;
+    }
+    .prose blockquote {
+      margin: 1.1rem 0;
+      padding: 0.15rem 0 0.15rem 1rem;
+      border-left: 3px solid var(--gold);
+    }
+    .prose blockquote p { margin: 0.4rem 0; }
+
+    .table-scroll {
+      overflow-x: auto;
+      margin: 1rem 0 1.3rem;
+      border: var(--line);
+      border-radius: var(--radius-1);
+      background: var(--surface);
+      -webkit-overflow-scrolling: touch;
+    }
+    .prose table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 36rem;
+      font-size: 0.92rem;
+    }
+    .prose th, .prose td {
+      border-bottom: var(--line);
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .prose tr:last-child td { border-bottom: 0; }
+    .prose th {
+      background: var(--surface-subtle);
+      font-weight: 650;
+      color: var(--fg);
+    }
+
+    .post-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+    .post-list a {
+      display: block;
+      background: var(--surface);
+      border: var(--line);
+      border-radius: var(--radius-2);
+      padding: 1.2rem 1.3rem;
+      text-decoration: none;
+      box-shadow: var(--shadow-1);
+    }
+    .post-list a:hover { border-color: color-mix(in oklab, var(--cta) 45%, var(--border)); }
+    .post-list h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2vw, 1.45rem);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--fg);
+      margin: 0 0 0.45rem;
+    }
+    .post-list a:hover h2 { color: var(--cta); }
+    .post-list p { color: var(--muted); font-size: 0.98rem; line-height: 1.55; margin: 0; }
+
+    .footer {
+      border-top: var(--line);
+      padding: 3rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer .wrap-wide {
+      width: min(1120px, calc(100vw - 2.5rem));
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg);
+      margin-bottom: 0.75rem;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.25rem 0;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: var(--fg); }
+    .footer-bottom {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: var(--line);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      main { padding: 1.75rem 0 3rem; }
+      .nav-cta { padding: 0.5rem 0.9rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="escolasimples — início">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="34" role="img" aria-label="escolasimples">
+          <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+          <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+          <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+        </svg>
+      </a>
+      <a href="/#planos" class="nav-cta">Ver planos</a>
+    </div>
+  </nav>
+  <main>
+    <div class="wrap">
+      <article class="prose">
+        <h1>Privacidade</h1>
+        <p>Esta página explica, em linguagem direta, quais dados pessoais o site e o aplicativo do escolasimples tratam, para que servem, com quem são compartilhados e como você pede acesso, correção ou exclusão.</p>
+
+        <h2>Quem responde por esses dados</h2>
+        <p>O controlador dos dados do site é a Escola Simples, responsável pelo escolasimples. O site é <a href="https://www.escolasimples.com/">www.escolasimples.com</a> e o aplicativo fica em <a href="https://app.escolasimples.com/">app.escolasimples.com</a>. Para qualquer pedido sobre os seus dados, escreva para <a href="mailto:henriquedesouza.l@gmail.com">contato@escolasimples.com</a>.</p>
+        <!-- TODO(Luiz): publicar o CNPJ e o endereço do controlador. Não estão neste repositório — não inventar. -->
+        <!-- TODO(Luiz): se existir encarregado pelo tratamento (DPO), publicar o nome e o contato nesta página. Não inventar. -->
+
+        <h2>Formulário Comece agora</h2>
+        <p>Na página inicial, o botão de cada plano abre o formulário Comece agora. Os campos são:</p>
+        <ul>
+          <li>plano escolhido: Essencial, Profissional ou Avançado;</li>
+          <li>nome completo;</li>
+          <li>e-mail;</li>
+          <li>nome da escola;</li>
+          <li>cidade;</li>
+          <li>estado;</li>
+          <li>celular / WhatsApp;</li>
+          <li>CNPJ, apenas se você preencher. É o único campo opcional.</li>
+        </ul>
+        <p>A finalidade é responder o seu interesse naquele plano e combinar o próximo passo. O envio não cria uma conta no aplicativo.</p>
+        <p>Do jeito que o site está publicado, esses dados não são gravados num servidor da Escola Simples. Ao confirmar, o navegador monta uma mensagem com os campos preenchidos e abre o WhatsApp em <a href="https://wa.me/551151044080">https://wa.me/551151044080</a>. Quem recebe a conversa é o WhatsApp da Escola Simples. A mensagem passa pela Meta, empresa do WhatsApp, e fica no histórico do seu aparelho e no nosso, até ser apagada.</p>
+        <p>O código da página tem um segundo modo, desligado. Nesse modo, os mesmos campos iriam no endereço para https://api.escolasimples.com/checkout, no fluxo de pagamento que o código chama de Abacate Pay. Esse modo não roda hoje e não recebe dados.</p>
+        <!-- TODO(Luiz): confirmar se o modo de checkout Abacate Pay (api.escolasimples.com) vai ao ar. Se sim, atualizar esta página com o que esse fluxo guarda, a base legal e o prazo. -->
+
+        <h2>Tag do Google Ads</h2>
+        <p>A página inicial carrega a tag do Google Ads de identificação AW-1017732989, pelo script servido em googletagmanager.com. A tag pode gravar cookies no navegador para reconhecer a visita e ligá-la a um anúncio.</p>
+        <p>Quando o formulário é enviado, a página dispara um evento de conversão para AW-1017732989. Esse evento não leva nome, e-mail, telefone nem os outros campos. Os campos seguem apenas na mensagem do WhatsApp. Os cookies podem associar a conversão ao navegador que viu o anúncio.</p>
+        <p>A finalidade é medir se o anúncio gerou um pedido de contato. Não há Google Analytics 4 neste site. A política do Google está em <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>.</p>
+
+        <h2>Pixel da Meta</h2>
+        <p>A página inicial também carrega o Pixel da Meta, identificador 1304372238478913, pelo script em connect.facebook.net. Ele registra a abertura da página e, no envio do formulário, um evento de lead. A Meta pode gravar cookies para essa medição. Os campos do formulário não vão dentro desse evento. A política da Meta está em <a href="https://www.facebook.com/privacy/policy/">facebook.com/privacy/policy</a>.</p>
+        <p>A tag do Google e o pixel carregam assim que a página inicial abre. O site não pede consentimento antes de carregá-los. As páginas do blog e esta página de privacidade não carregam essas tags.</p>
+        <!-- TODO(Luiz): decidir se a home passa a pedir consentimento antes da tag AW-1017732989 e do Pixel da Meta, e qual base legal fica registrada. -->
+
+        <h2>Parâmetros de anúncio no endereço</h2>
+        <p>Se a pessoa chega com <code>gclid</code>, com <code>utm_source</code> contendo google, ou com <code>utm_medium=cpc</code>, a página inicial rola até a seção de planos e abre o formulário do plano Profissional. Isso acontece no navegador. A página não envia esses parâmetros para um servidor da Escola Simples. A tag do Google pode usar o <code>gclid</code> para atribuir a conversão.</p>
+
+        <h2>O que o aplicativo guarda</h2>
+        <p>O aplicativo é o sistema de gestão da escola. Este repositório contém só o site, então a lista abaixo é o que as páginas públicas descrevem que o sistema registra, para a escola funcionar:</p>
+        <ul>
+          <li>dados da escola: nome, logo e cores;</li>
+          <li>acesso separado de administrador e de professor;</li>
+          <li>alunos: cadastro, nível do Quadro Europeu (A1 a C2), responsável quando o aluno é menor, endereço quando a aula é na casa do aluno, pacote e histórico de aulas;</li>
+          <li>agenda: dia, horário, professor, status da aula, presença (presente, falta ou justificada) e a anotação do que foi trabalhado;</li>
+          <li>financeiro: mensalidades e a situação do mês (em dia, pendente, parcial ou vencido), contas a pagar, folha dos professores calculada pelas aulas dadas e previsão de caixa;</li>
+          <li>arquivos CSV que a escola importa, como a lista de alunos, ou exporta, como os relatórios.</li>
+        </ul>
+        <p>Quem decide o que lançar sobre alunos e professores é a escola. Nesses dados, a escola é a controladora e a Escola Simples trata para prestar o serviço. No formulário do site e nos cookies de anúncio, a controladora é a Escola Simples.</p>
+        <p>Quando o aluno é menor, o cadastro descrito no site inclui o responsável. Quem coleta essa informação junto à família é a escola.</p>
+        <p>As páginas públicas do produto dizem que não há portal do aluno. O aluno não entra no sistema para pagar ou remarcar.</p>
+
+        <h2>Para que usamos</h2>
+        <ul>
+          <li>responder quem pediu contato sobre um plano;</li>
+          <li>medir se um anúncio levou a esse contato;</li>
+          <li>operar a escola de quem usa o sistema: agenda, presença, financeiro e acesso da equipe.</li>
+        </ul>
+        <p>Não vendemos esses dados.</p>
+
+        <h2>Com quem compartilhamos</h2>
+        <p>No código deste site, o compartilhamento que de fato acontece é este:</p>
+        <ul>
+          <li>Meta, pelo WhatsApp, quando o formulário é enviado: o texto da mensagem, com os campos preenchidos;</li>
+          <li>Google, pela tag AW-1017732989, na página inicial: cookies e o evento de conversão;</li>
+          <li>Meta, pelo Pixel 1304372238478913, na página inicial: visualização da página e evento de lead.</li>
+        </ul>
+        <p>O código deste repositório não mostra onde o aplicativo está hospedado, nem banco, e-mail ou outro fornecedor do sistema. Esses nomes não estão listados aqui porque não dá para confirmá-los a partir deste site.</p>
+        <!-- TODO(Luiz): listar os subprocessadores reais do aplicativo (hospedagem, banco, e-mail, pagamento). Eles não aparecem neste repositório. -->
+
+        <h2>Por quanto tempo</h2>
+        <p>O site estático não guarda uma cópia do formulário. A conversa permanece no WhatsApp, no seu aparelho e no da Escola Simples, até ser apagada.</p>
+        <p>No aplicativo, os dados que a escola lança ficam disponíveis enquanto a conta existir, para a operação do dia a dia. O prazo de guarda depois do cancelamento não está publicado nesta página. Se a lei exigir a conservação de algum registro, esse trecho permanece pelo tempo legal. Para pedir exclusão, use o e-mail de contato.</p>
+        <!-- TODO(Luiz): publicar o prazo de retenção dos dados da conta, dos alunos e do financeiro depois do cancelamento. Esse prazo não está neste repositório. -->
+
+        <h2>Seus direitos</h2>
+        <p>Pela Lei Geral de Proteção de Dados (LGPD), você pode pedir, pelo e-mail contato@escolasimples.com:</p>
+        <ul>
+          <li>confirmação de que tratamos dados seus e acesso a eles;</li>
+          <li>correção de dado incompleto, desatualizado ou errado;</li>
+          <li>anonimização, bloqueio ou exclusão do que for desnecessário ou tratado em desacordo com a lei;</li>
+          <li>informação sobre com quem compartilhamos;</li>
+          <li>portabilidade, quando a lei aplicar;</li>
+          <li>exclusão dos dados tratados com o seu consentimento;</li>
+          <li>revogação do consentimento;</li>
+          <li>oposição a um tratamento feito com base em legítimo interesse.</li>
+        </ul>
+        <p>O formulário existe para atender o pedido de contato que você faz, como passo anterior a uma eventual contratação. Você pode bloquear cookies de terceiros no próprio navegador. A medição do anúncio na página inicial pode deixar de funcionar, e o restante do site continua utilizável.</p>
+        <p>Se o pedido não for atendido, a autoridade é a Autoridade Nacional de Proteção de Dados (ANPD): <a href="https://www.gov.br/anpd/">www.gov.br/anpd</a>.</p>
+
+        <h2>Contato</h2>
+        <p>Escola Simples<br /><a href="mailto:henriquedesouza.l@gmail.com">contato@escolasimples.com</a></p>
+      </article>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="wrap-wide">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" height="28" style="margin-bottom:0.75rem;" role="img" aria-label="escolasimples">
+            <text x="8" y="54" fill="#2d325a" font-family="'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="52" font-weight="750" letter-spacing="-0.04em">escolasimples</text>
+            <rect x="12" y="68" width="132" height="4" rx="2" fill="#2d325a" opacity="0.85"/>
+            <rect x="148" y="68" width="76" height="4" rx="2" fill="#e8a850"/>
+          </svg>
+          <p style="font-size:0.85rem;max-width:260px;">Gestão simples para escolas de idiomas. Feito por quem já viveu o drama da planilha.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Produto</h4>
+          <a href="/#planos">Planos</a>
+          <a href="/#como-funciona">Como funciona</a>
+          <a href="/#demo">Ver o sistema</a>
+          <a href="/blog/">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <a href="/#hero">Sobre</a>
+          <a href="/#">Contato</a>
+          <a href="/privacidade/">Privacidade</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="mailto:henriquedesouza.l@gmail.com">contato@escolasimples.com</a>
+          <a href="https://wa.me/551151044080">WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 escolasimples</span>
+        <span style="color:var(--muted);display:inline-flex;align-items:center;gap:6px;">Feito no Brasil <svg width="14" height="11" viewBox="0 0 14 11" aria-hidden="true"><rect x="0" y="0" width="14" height="11" rx="1" fill="#009b3a"/><path d="M2.5 5.5L7 1.5L11.5 5.5L7 9.5Z" fill="#fedf00"/><circle cx="7" cy="5.5" r="3" fill="#002776"/></svg></span>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  </script>
+</body>
+</html>

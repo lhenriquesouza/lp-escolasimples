@@ -7,7 +7,7 @@ O escolasimples é um sistema de gestão (SaaS) para pequenas e médias escolas 
 ## Recursos principais
 
 - **Alunos e turmas:** cadastro completo, níveis CEFR, histórico, responsáveis, pacotes de aulas
-- **Agenda de aulas:** calendário visual (dia/semana/mês), aulas avulsas, recorrentes e substituições
+- **Agenda de aulas:** calendário visual (dia/semana/mês), aulas avulsas e recorrentes
 - **Financeiro:** mensalidades, contas a pagar e a receber, fluxo de caixa, baixa de pagamento em um clique
 - **Folha de pagamento:** cálculo automático baseado nas aulas dadas por cada professor no mês
 - **Previsibilidade:** receita prevista, executado vs. esperado, inadimplência ativa, projeção futura
@@ -18,9 +18,9 @@ O escolasimples é um sistema de gestão (SaaS) para pequenas e médias escolas 
 
 | Plano | Preço mensal | Limite de alunos |
 |-------|-------------|------------------|
-| Essencial | R$ 149 | até 50 alunos |
-| Profissional | R$ 249 | até 100 alunos |
-| Avançado | R$ 349 | até 300 alunos |
+| Essencial | R$ 79 | até 100 alunos |
+| Profissional | R$ 149 | até 200 alunos |
+| Avançado | R$ 249 | até 300 alunos |
 | Enterprise | Sob consulta | acima de 300 alunos |
 
 Todos os planos incluem o sistema completo — os recursos não mudam entre planos. O que varia é apenas o número de alunos.
