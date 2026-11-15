@@ -46,7 +46,7 @@ Com o escolasimples, você tem:
 — White-label: nome, logo e cores da sua escola
 
 O sistema é o mesmo para todos os planos — o que muda é o número de alunos.
-Planos a partir de R$ 79/mês (até 50 alunos).
+Planos a partir de R$ 79/mês (até 100 alunos).
 ```
 
 ---
@@ -82,8 +82,8 @@ Planos a partir de R$ 79/mês (até 50 alunos).
 
 | Plano | Preço | Alunos | Preço por aluno |
 |-------|-------|--------|-----------------|
-| Essencial | R$ 79/mês | até 50 | R$ 1,58 |
-| Profissional | R$ 149/mês | até 100 | R$ 1,49 |
+| Essencial | R$ 79/mês | até 100 | R$ 0,79 |
+| Profissional | R$ 149/mês | até 200 | R$ 0,75 |
 | Avançado | R$ 249/mês | até 300 | R$ 0,83 |
 | Enterprise | Sob consulta | 300+ | — |
 

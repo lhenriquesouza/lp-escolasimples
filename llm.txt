@@ -18,8 +18,8 @@ O escolasimples é um sistema de gestão (SaaS) para pequenas e médias escolas 
 
 | Plano | Preço mensal | Limite de alunos |
 |-------|-------------|------------------|
-| Essencial | R$ 79 | até 50 alunos |
-| Profissional | R$ 149 | até 100 alunos |
+| Essencial | R$ 79 | até 100 alunos |
+| Profissional | R$ 149 | até 200 alunos |
 | Avançado | R$ 249 | até 300 alunos |
 | Enterprise | Sob consulta | acima de 300 alunos |
 
